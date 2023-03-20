@@ -1,23 +1,26 @@
+import com.sun.jdi.event.StepEvent;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class FileHandling {
-    public static void inventoryWholeFileRead () {
+    public static ArrayList<String> WholeFileRead (String Filename) {
         try {
-            FileReader fr = new FileReader("Inventory");
+            FileReader fr = new FileReader(Filename);
             BufferedReader br = new BufferedReader(fr);
+            ArrayList<String> data = new ArrayList<>();
             String line =br.readLine();
             while (line != null) {
-                String[] parts=line.split(",");
-
-                System.out.println("There is "+parts[0]+" of " + parts[1]);
+                data.add(line);
                 line = br.readLine();
-
             }
+            return data;
         }
         catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
