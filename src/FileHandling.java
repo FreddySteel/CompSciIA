@@ -1,5 +1,3 @@
-import com.sun.jdi.event.StepEvent;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -22,20 +20,31 @@ public class FileHandling {
         return null;
     }
 
-    public static String[] fileToArray(String filename) {
+    public static int numOfLines(String filename) {
+        //Open the file.
+        //Read line by line, and increases count + 1 each line.
+        //Close the file.
+        //Read the count.
         try {
             Scanner line = new Scanner(new File(filename));
-            int numLines = 0;
+            int numLines = 1;
             while (line.hasNextLine()) {
                 line.nextLine();
                 numLines++;
             }
             line.close();
-            //Open the file.
-            //Read line by line, and increases count + 1 each line.
-            //Close the file.
-            //Read the count.
+            System.out.println(numLines);
+            return numLines;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
+    public static String[] fileToArray(String filename, int numLines) {
+        try {
+
+            Scanner line = new Scanner(new File(filename));
             String[] data = new String[numLines];
             line = new Scanner(new File(filename));
             int i = 0;
@@ -44,11 +53,11 @@ public class FileHandling {
                 i++;
             }
             line.close();
-
             return data;
-        } catch (IOException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-            return null;
         }
+        return null;
     }
 }
+

@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Orders{
@@ -10,7 +11,7 @@ public class Orders{
 
     public static void takeOrder(){
     Scanner scanner = new Scanner(System.in);
-        String[] customers = FileHandling.fileToArray("Customer");
+        String[] customers = FileHandling.fileToArray("Customers",FileHandling.numOfLines("Customers"));
         String[] products = {"Sausage", "Bacon", "Cheese"};
         int[] quantities = new int[3];
 
@@ -34,5 +35,5 @@ public class Orders{
     }
 
         scanner.close();
-}
+    }
 }
