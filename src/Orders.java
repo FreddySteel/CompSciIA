@@ -13,7 +13,7 @@ public class Orders{
     Scanner scanner = new Scanner(System.in);
         String[] customers = FileHandling.fileToArray("Customers",FileHandling.numOfLines("Customers"));
         String[] products = {"Sausage", "Bacon", "Cheese"};
-        int[] quantities = new int[3];
+        int[] quantities = new int[FileHandling.numOfLines("Inventory")];
 
         for (String customer : customers) {
         String[] customerInfo = customer.split(",");

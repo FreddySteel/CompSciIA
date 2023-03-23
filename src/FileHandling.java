@@ -33,7 +33,6 @@ public class FileHandling {
                 numLines++;
             }
             line.close();
-            System.out.println(numLines);
             return numLines;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -44,7 +43,7 @@ public class FileHandling {
     public static String[] fileToArray(String filename, int numLines) {
         try {
 
-            Scanner line = new Scanner(new File(filename));
+            Scanner line ;// = //new Scanner(new File(filename));
             String[] data = new String[numLines];
             line = new Scanner(new File(filename));
             int i = 0;
@@ -54,6 +53,7 @@ public class FileHandling {
             }
             line.close();
             return data;
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
