@@ -12,7 +12,7 @@ public class Orders{
     public static void takeOrder(){
     Scanner scanner = new Scanner(System.in);
         String[] customers = FileHandling.fileToArray("Customers",FileHandling.numOfLines("Customers"));
-        String[] products = {"Sausage", "Bacon", "Cheese"};
+        String[] products = stockList.productsInStock();
         int[] quantities = new int[FileHandling.numOfLines("Inventory")];
 
         for (String customer : customers) {

@@ -27,7 +27,7 @@ public class FileHandling {
         //Read the count.
         try {
             Scanner line = new Scanner(new File(filename));
-            int numLines = 1;
+            int numLines = 0;
             while (line.hasNextLine()) {
                 line.nextLine();
                 numLines++;

@@ -20,7 +20,7 @@ public class stockList {
         int k= 0;
         String[] products = new String[FileHandling.numOfLines("Inventory")];
         //String[] list = FileHandling.fileToArray("Inventory", FileHandling.numOfLines("Inventory"));
-        String[] list =FileHandling.fileToArray("Inventory",3);
+        String[] list =FileHandling.fileToArray("Inventory",FileHandling.numOfLines("Inventory"));
         for (String product : list) {
             String[] line = product.split(",");
             String prod = line[1];
