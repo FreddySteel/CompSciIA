@@ -59,5 +59,16 @@ public class FileHandling {
         }
         return null;
     }
+
+
+   // public static class EditInventory(String fileName) {
+
+        // Read the current line and replace the number
+        //String line = raf.readLine();
+        //String[] parts = line.split(",");
+        //parts[0] = Integer.toString(newNumber);
+        //String newLine = String.join(",", parts);
+ //   }
+
 }
 
