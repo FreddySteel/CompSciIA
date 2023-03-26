@@ -25,7 +25,7 @@ public class Orders{
             quantities[i] = scanner.nextInt();
         }
 
-        System.out.println("You ordered:");
+        System.out.println(name+ " ordered:");
         for (int i = 0; i < products.length; i++) {
             System.out.println(quantities[i] + " " + products[i]);
         }
