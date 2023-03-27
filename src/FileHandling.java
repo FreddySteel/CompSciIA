@@ -60,6 +60,17 @@ public class FileHandling {
         return null;
     }
 
+    public static void WriteToFile(String fileName,String input,Boolean append) {
+        try {
+            FileWriter fw = new FileWriter(fileName,append);
+            PrintWriter pw = new PrintWriter(fw);
+
+            pw.write("\n"+input);
+            pw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
    // public static class EditInventory(String fileName) {
 

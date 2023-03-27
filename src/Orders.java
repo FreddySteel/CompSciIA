@@ -1,15 +1,18 @@
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Orders{
     //go through all the customers
     //display phone number and a user input
     //the user inputs product and how many
+    //output their order
     //then goes on to the next customer
     //repeats until all customers done
 
     public static void takeOrder(){
-    Scanner scanner = new Scanner(System.in);
+        ArrayList<String> order = new ArrayList();
+        Scanner scanner = new Scanner(System.in);
         String[] customers = FileHandling.fileToArray("Customers",FileHandling.numOfLines("Customers"));
         String[] products = stockList.productsInStock();
         int[] quantities = new int[FileHandling.numOfLines("Inventory")];
@@ -23,6 +26,7 @@ public class Orders{
         for (int i = 0; i < products.length; i++) {
             System.out.print("How many " + products[i] + " do you want? ");
             quantities[i] = scanner.nextInt();
+
         }
 
         System.out.println(name+ " ordered:");
