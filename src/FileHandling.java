@@ -20,6 +20,7 @@ public class FileHandling {
         return null;
     }
 
+    //returns number of lines in array.
     public static int numOfLines(String filename) {
         //Open the file.
         //Read line by line, and increases count + 1 each line.
@@ -40,6 +41,8 @@ public class FileHandling {
         return 0;
     }
 
+    // converts the file to an array,
+    //returns as an String array
     public static String[] fileToArray(String filename, int numLines) {
         try {
 
@@ -60,6 +63,7 @@ public class FileHandling {
         return null;
     }
 
+    //user can write to a file, and chose to append.
     public static void WriteToFile(String fileName,String input,Boolean append) {
         try {
             FileWriter fw = new FileWriter(fileName,append);
