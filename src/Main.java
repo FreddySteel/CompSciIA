@@ -1,10 +1,47 @@
 import java.io.File;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        stockList.displayStock();
+        System.out.println();
+        Scanner scanner = new Scanner(System.in);
+        boolean repeat =true;
+        boolean repeat2 = true;
+        boolean repeat3 =true;
+        System.out.println("Hello, To take orders (1) To edit files (2) To display ... (3) ");
+        Integer input = scanner.nextInt();
+        Integer input2;
+        Integer input3;
+        while (repeat){
+            if (input == 1) {
+                Orders.takeOrder();
+            }
+            if (input == 2){
+                while (repeat2){
+                    System.out.println("To edit Customers (1) To edit Inventory (2)");
+                    input2 = scanner.nextInt();
+                    if (input2 == 1){
+                        // method to edit the file Customers
+                    }
+                    if(input2 == 2) {
+                        // method to edit the file inventory
 
-        //Orders.takeOrder();
+                    }
+                }
+            }
+            if (input == 3){
+                while(repeat3) {
+                    System.out.println("To display Inventory (1) To display Customers (2)");
+                    input3 = scanner.nextInt();
+                    if (input3 == 1) {
+                        FileHandling.displayStock("Inventory");
+                    }
+                    if (input3 == 2) {
+                        FileHandling.displayStock("Customers");
+                    }
+                }
+            }
+        }
     }
 }
 //System.out.println(stockList.productsInStock());

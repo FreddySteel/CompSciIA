@@ -1,42 +1,39 @@
-
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Orders{
-    //go through all the customers
-    //display phone number and a user input
-    //the user inputs product and how many
-    //output their order
-    //then goes on to the next customer
-    //repeats until all customers done
-
-    public static void takeOrder(){
-        ArrayList<String> order = new ArrayList();
+public class Orders {
+    public static ArrayList<ArrayList<String>> takeOrder() {
+        ArrayList<ArrayList<String>> orders = new ArrayList<>(); // 2D ArrayList for all orders
         Scanner scanner = new Scanner(System.in);
-        String[] customers = FileHandling.fileToArray("Customers",FileHandling.numOfLines("Customers"));
+        String[] customers = FileHandling.fileToArray("Customers", FileHandling.numOfLines("Customers"));
         String[] products = stockList.productsInStock();
-        int[] quantities = new int[FileHandling.numOfLines("Inventory")];
 
         for (String customer : customers) {
-        String[] customerInfo = customer.split(",");
-        String name = customerInfo[0];
-        String phone = customerInfo[1];
+            ArrayList<String> order = new ArrayList<>(); // ArrayList for current customer's order
+            String[] customerInfo = customer.split(",");
+            String name = customerInfo[0];
+            String phone = customerInfo[1];
 
-        System.out.println("Customer: " + name + " Phone: " + phone);
-        for (int i = 0; i < products.length; i++) {
-            System.out.print("How many " + products[i] + " do you want? ");
-            quantities[i] = scanner.nextInt();
+            order.add(name); // Add customer name to order list
 
+            System.out.println("Customer: " + name + " Phone: " + phone);
+            for (int i = 0; i < products.length; i++) {
+                System.out.print("How many " + products[i] + " do you want? ");
+                int quantity = scanner.nextInt();
+                order.add(products[i] + " " + quantity); // Add product and quantity to order list
+            }
+
+            System.out.println(name + " ordered:");
+            System.out.println(order);
+            orders.add(order); // Add customer's order list to main order ArrayList
         }
 
-        System.out.println(name+ " ordered:");
-        for (int i = 0; i < products.length; i++) {
-            System.out.println(quantities[i] + " " + products[i]);
+        // Print out all orders
+        for (ArrayList<String> order : orders) {
+            System.out.println(order);
         }
-
-        System.out.println("");
-    }
-
-        scanner.close();
+        System.out.println(orders);
+        return orders;
     }
 }

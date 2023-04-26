@@ -4,16 +4,6 @@ import java.util.ArrayList;
 public class stockList {
     // display the stocklist
 
-    public static void displayStock() {
-        System.out.println("Amount Product");
-
-        ArrayList list = FileHandling.WholeFileRead("Inventory");
-        for (int i = 0; i < list.size(); i++) {
-            System.out.print(list.get(i));
-            System.out.println("");
-
-        }
-    }
 
     public static String[] productsInStock() {
         int k= 0;

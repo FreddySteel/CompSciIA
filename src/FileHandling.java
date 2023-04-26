@@ -46,7 +46,7 @@ public class FileHandling {
     public static String[] fileToArray(String filename, int numLines) {
         try {
 
-            Scanner line ;// = //new Scanner(new File(filename));
+            Scanner line;// = //new Scanner(new File(filename));
             String[] data = new String[numLines];
             line = new Scanner(new File(filename));
             int i = 0;
@@ -64,26 +64,34 @@ public class FileHandling {
     }
 
     //user can write to a file, and chose to append.
-    public static void WriteToFile(String fileName,String input,Boolean append) {
+    public static void WriteToFile(String fileName, String input, Boolean append) {
         try {
-            FileWriter fw = new FileWriter(fileName,append);
+            FileWriter fw = new FileWriter(fileName, append);
             PrintWriter pw = new PrintWriter(fw);
 
-            pw.write("\n"+input);
+            pw.write("\n" + input);
             pw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-   // public static class EditInventory(String fileName) {
+    public static void displayStock(String filename) {
+        ArrayList list = FileHandling.WholeFileRead(filename);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.print(list.get(i));
+            System.out.println("");
 
-        // Read the current line and replace the number
-        //String line = raf.readLine();
-        //String[] parts = line.split(",");
-        //parts[0] = Integer.toString(newNumber);
-        //String newLine = String.join(",", parts);
- //   }
+            // public static class EditInventory(String fileName) {
 
+            // Read the current line and replace the number
+            //String line = raf.readLine();
+            //String[] parts = line.split(",");
+            //parts[0] = Integer.toString(newNumber);
+            //String newLine = String.join(",", parts);
+            //   }
+
+        }
+    }
 }
 
