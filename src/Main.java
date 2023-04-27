@@ -44,5 +44,3 @@ public class Main {
         }
     }
 }
-//System.out.println(stockList.productsInStock());
-//System.out.println(FileHandling.WholeFileRead("Inventory"));
