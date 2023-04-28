@@ -1,4 +1,5 @@
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -14,7 +15,8 @@ public class Main {
         Integer input3;
         while (repeat){
             if (input == 1) {
-                Orders.takeOrder();
+                ArrayList<ArrayList<String>> AllOrders = Orders.takeOrder();
+                repeat= false;
             }
             if (input == 2){
                 while (repeat2){
@@ -35,9 +37,11 @@ public class Main {
                     input3 = scanner.nextInt();
                     if (input3 == 1) {
                         FileHandling.displayStock("Inventory");
+                        repeat3 = false;
                     }
                     if (input3 == 2) {
                         FileHandling.displayStock("Customers");
+                        repeat3 = false;
                     }
                 }
             }

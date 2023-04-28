@@ -1,19 +1,17 @@
 import java.util.ArrayList;
 public class Invoice{
-    private int id;
     private Customer customer;
     private ArrayList<Product> products;
     private double totalCost;
+    private ArrayList<ArrayList<String>> orders;
 
-    public Invoice(int id, Customer customer, ArrayList<Product> products) {
-        this.id = id;
+    public Invoice(Customer customer) {
         this.customer = customer;
-        this.products = products;
         this.totalCost = calculateTotalCost();
     }
-
-    public int getId() {
-        return id;
+    public static void addProduct(Product product) {
+        products.add(product);
+        totalCost += product.getPrice();
     }
 
     public Customer getCustomer() {
@@ -35,18 +33,29 @@ public class Invoice{
         }
         return cost;
     }
+    public void invoiceGenerator(){
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Invoice ID: ").append(id).append("\n");
-        sb.append("Customer Name: ").append(customer.getName()).append("\n");
-        sb.append("Customer Number: ").append(customer.getPhoneNumber()).append("\n");
-        sb.append("Products Ordered:\n");
-        for (Product product : products) {
-            sb.append("- ").append(product.getName()).append(": $").append(product.getPrice()).append("\n");
-        }
-        sb.append("Total Cost: $").append(totalCost);
-        return sb.toString();
+    for(int i = 0;i<orders.size();i++){
+        String customerName = orders.get(i).get(0);
+        Customer customer = new Customer(customerName);
+        Invoice invoice = new Invoice(customer);
+    // Add the products to the invoice
+        for (int j = 1; j < orders.get(i).; j++) {
+        String[] productOrder = orders.get(i).get(j).split(" ");
+        String productName = productOrder[0];
+        int productQuantity = Integer.parseInt(productOrder[1]);
+        Product product = new Product(productName, productQuantity);
+        Invoice.addProduct(product);
+    }
+
+    // Calculate the total cost and add the invoice to the list
+        invoice.calculateTotalCost();
+        invoices.add(invoice);
+
+// Print out the invoices
+
+
+    for(Invoice invoice :invoices){
+        System.out.println(invoice);
     }
 }
