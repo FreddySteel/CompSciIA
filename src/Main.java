@@ -9,21 +9,24 @@ public class Main {
         boolean repeat =true;
         boolean repeat2 = true;
         boolean repeat3 =true;
-        System.out.println("Hello, To take orders (1) To edit files (2) To display ... (3) ");
+        System.out.println("Hello, To take orders (1) To print invoices (2) To display ... (3) ");
         Integer input = scanner.nextInt();
         Integer input2;
         Integer input3;
         while (repeat){
             if (input == 1) {
-                ArrayList<ArrayList<String>> AllOrders = Orders.takeOrder();
+                //ArrayList<ArrayList<String>> AllOrders =
+                ArrayList<ArrayList<String>> orders=Orders.takeOrder(); // do something to orders for invoice to work!
+
+
                 repeat= false;
             }
             if (input == 2){
                 while (repeat2){
-                    System.out.println("To edit Customers (1) To edit Inventory (2)");
+                    System.out.println("TO print invoices (1)");
                     input2 = scanner.nextInt();
                     if (input2 == 1){
-                        // method to edit the file Customers
+                        //
                     }
                     if(input2 == 2) {
                         // method to edit the file inventory

@@ -64,7 +64,7 @@ public class FileHandling {
     }
 
     //user can write to a file, and chose to append.
-    public static void WriteToFile(String fileName, String input, Boolean append) {
+    public void WriteToFile(String fileName, String input, Boolean append) {
         try {
             FileWriter fw = new FileWriter(fileName, append);
             PrintWriter pw = new PrintWriter(fw);

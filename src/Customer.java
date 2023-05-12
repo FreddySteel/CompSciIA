@@ -2,6 +2,10 @@ public class Customer {
     private String customerName;
     private int phoneNumber;
 
+    public Customer(String customerName,int phoneNumber) {
+    }
+
+
     public String getCustomerName() {
         return customerName;
     }
