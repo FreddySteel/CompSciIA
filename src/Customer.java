@@ -1,21 +1,17 @@
 public class Customer {
-    private String customerName;
-    private int phoneNumber;
+    private String name;
+    private String phoneNumber;
 
-    public Customer(String customerName,int phoneNumber) {
+    public Customer(String cutomername, String phoneNumber) {
+        this.name = cutomername;
+        this.phoneNumber = phoneNumber;
     }
-
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public int getPhoneNumber() {
-        return phoneNumber;
-    }
-
 
     public String getName() {
-        return null;
+        return name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 public class invoiceManagers {
     private List<Invoice> invoices;
 
-    public void invoiceManager() {
+    public invoiceManagers() {
         this.invoices = new ArrayList<Invoice>();
     }
 
@@ -13,8 +13,10 @@ public class invoiceManagers {
     }
 
     public List<Invoice> getAllInvoices() {
-
-        System.out.println(invoices);
+        for(Invoice invoice : invoices) {
+            System.out.println(invoice);
+        }
         return invoices;
     }
 }
+

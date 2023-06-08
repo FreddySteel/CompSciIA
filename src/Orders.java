@@ -1,21 +1,26 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Orders {
-    public static ArrayList<ArrayList<String>> takeOrder() {
-        ArrayList<ArrayList<String>> orders = new ArrayList<>(); // 2D ArrayList for all orders
+    private static invoiceManagers invoiceManager = new invoiceManagers();
+
+    public static ArrayList<String> takeOrder() {
+        ArrayList<String> order = new ArrayList<>(); // ArrayList for current customer's order
         Scanner scanner = new Scanner(System.in);
         String[] customers = FileHandling.fileToArray("Customers", FileHandling.numOfLines("Customers"));
         String[] products = stockList.productsInStock();
 
         for (String customer : customers) {
-            ArrayList<String> order = new ArrayList<>(); // ArrayList for current customer's order
+            // Reset order for new customer
+            order.clear();
+
             String[] customerInfo = customer.split(",");
             String name = customerInfo[0];
             String phone = customerInfo[1];
 
-            order.add(name); // Add customer name to order list
+            order.add(name);
+            order.add(phone);
+            // Add customer name to order list
 
             System.out.println("Customer: " + name + " Phone: " + phone);
             for (int i = 0; i < products.length; i++) {
@@ -26,14 +31,15 @@ public class Orders {
 
             System.out.println(name + " ordered:");
             System.out.println(order);
-            orders.add(order); // Add customer's order list to main order ArrayList
-        }
+            Invoice invoice = Invoice.invoiceGenerator(order);
+            invoiceManager.addInvoice(invoice);
 
-        // Print out all orders
-        for (ArrayList<String> order : orders) {
-            System.out.println(order);
+            System.out.println("Do you want to take another order? (Y/N)");
+            String input = scanner.next();
+            if (input.equalsIgnoreCase("N")) {
+                break; // Exit the for-loop
+            }
         }
-        System.out.println(orders);
-        return orders;
+        return order;
     }
 }

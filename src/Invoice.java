@@ -1,14 +1,14 @@
 import java.util.ArrayList;
+
 public class Invoice {
     private Customer customer;
     private ArrayList<Product> products;
     private double totalCost;
 
-    invoiceManagers invoices;
-
     public Invoice(Customer customer) {
         this.customer = customer;
-        this.totalCost = calculateTotalCost();
+        this.products = new ArrayList<>();
+        this.totalCost = 0;
     }
 
     public void addProduct(Product product) {
@@ -28,38 +28,41 @@ public class Invoice {
         return totalCost;
     }
 
-    private double calculateTotalCost() {
-        double cost = 0;
+    private void calculateTotalCost() {
+        totalCost = 0;
         for (Product product : products) {
-            cost += product.getPrice();
+            totalCost += product.getPrice();
         }
-        return cost;
     }
 
-    public void invoiceGenerator() {
-
-        for (int i = 0; i < orders.size(); i++) {
-            String customerName = orders.get(i).get(0);
-            Customer customer = new Customer(customerName, getCustomer().getPhoneNumber());
-            Invoice invoice = new Invoice(customer);
-            // Add the products to the invoice
-            for (int j = 1; j < orders.get(i).size(); j++) {
-                String[] productOrder = orders.get(i).get(j).split(" ");
-                String productName = productOrder[0];
-                int productQuantity = Integer.parseInt(productOrder[1]);
-                Product product = new Product(productName, productQuantity);
-                addProduct(product);
+    public static Invoice invoiceGenerator(ArrayList<String> order) {
+        String customerName = order.get(0);
+        String customerNumber = order.get(1);
+        Customer customer = new Customer(customerName, customerNumber);
+        Invoice invoice = new Invoice(customer);
+        // Add the products to the invoice
+        for (int j = 2; j < order.size(); j++) {
+            String[] productOrder = order.get(j).split(" ");
+            String productName = productOrder[0];
+            int productQuantity = Integer.parseInt(productOrder[1]);
+            double productPrice = stockList.getProductPrice(productName);
+            if (productPrice < 0) {
+                System.out.println("Error: product " + productName + " not found");
+                continue;  // Skip this product
             }
-            // Calculate the total cost and add the invoice to the list
-            invoice.calculateTotalCost();
-            invoices.addInvoice(invoice);
-
-// Print out the invoices
-            for(int j = 0; j <10;i++){
-                System.out.println(invoice);
+            Product product = new Product(productName, productPrice);
+            for (int i = 0; i < productQuantity; i++) {
+                invoice.addProduct(product);
             }
         }
+        // Calculate the total cost and add the invoice to the list
+        invoice.calculateTotalCost();
+        return invoice;
 
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice: " + customer.getName() + "\n" + products.toString() + "\nTotal Cost: " + totalCost +"\n";
     }
 }
-//for (invoice : 20) {
