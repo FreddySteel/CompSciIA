@@ -63,6 +63,12 @@ public class Invoice {
 
     @Override
     public String toString() {
-        return "Invoice: " + customer.getName() + "\n" + products.toString() + "\nTotal Cost: " + totalCost +"\n";
+        StringBuilder invoiceString = new StringBuilder();
+        invoiceString.append("Invoice for ").append(customer.getName()).append("\n");
+        for (Product product : products) {
+            invoiceString.append(product).append("\n");
+        }
+        invoiceString.append("Total Cost: $").append(String.format("%.2f", totalCost)).append("\n");
+        return invoiceString.toString();
     }
 }

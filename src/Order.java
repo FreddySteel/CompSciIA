@@ -1,18 +1,17 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-
-public class Orders {
+public class Order {
     private static invoiceManagers invoiceManager = new invoiceManagers();
 
     public static ArrayList<String> takeOrder() {
-        ArrayList<String> order = new ArrayList<>(); // ArrayList for current customer's order
         Scanner scanner = new Scanner(System.in);
         String[] customers = FileHandling.fileToArray("Customers", FileHandling.numOfLines("Customers"));
         String[] products = stockList.productsInStock();
+        ArrayList<String> lastOrder = null;
 
         for (String customer : customers) {
             // Reset order for new customer
-            order.clear();
+            ArrayList<String> order = new ArrayList<>();// ArrayList for current customer's order
 
             String[] customerInfo = customer.split(",");
             String name = customerInfo[0];
@@ -31,8 +30,10 @@ public class Orders {
 
             System.out.println(name + " ordered:");
             System.out.println(order);
-            Invoice invoice = Invoice.invoiceGenerator(order);
-            invoiceManager.addInvoice(invoice);
+            lastOrder = order; // Keep track of the last order
+
+//            Invoice invoice = Invoice.invoiceGenerator(order);
+//            invoiceManager.addInvoice(invoice);
 
             System.out.println("Do you want to take another order? (Y/N)");
             String input = scanner.next();
@@ -40,6 +41,6 @@ public class Orders {
                 break; // Exit the for-loop
             }
         }
-        return order;
+        return lastOrder;
     }
 }

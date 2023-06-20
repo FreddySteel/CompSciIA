@@ -10,7 +10,7 @@ public class Main {
             System.out.println("Hello, To take orders (1) To print invoices (2) To display ... (3) ");
             Integer input = scanner.nextInt();
             if(input == 1){
-                ArrayList<String> order = Orders.takeOrder();
+                ArrayList<String> order = Order.takeOrder();
                 Invoice invoice = Invoice.invoiceGenerator(order);
                 manager.addInvoice(invoice);
             } else if(input == 2){

@@ -13,9 +13,9 @@
         return price;
     }
 
-    public String toString() {
-        System.out.println(name + " ($" + String.format("%.2f", price) + ")");
-        return name + " ($" + String.format("%.2f", price) + ")";
+     @Override
+     public String toString() {
+         return name + " ($" + String.format("%.2f", price) + ")";
 
     }
 

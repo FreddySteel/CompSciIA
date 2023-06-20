@@ -9,12 +9,14 @@ public class invoiceManagers {
     }
 
     public void addInvoice(Invoice invoice) {
-        invoices.add(invoice);
+        this.invoices.add(invoice);  // this should add a new invoice to the list
     }
 
     public List<Invoice> getAllInvoices() {
-        for(Invoice invoice : invoices) {
-            System.out.println(invoice);
+        int count = 1;
+        for (Invoice invoice : invoices) {
+            System.out.println("Invoice " + count + ":\n" + invoice);
+            count++;
         }
         return invoices;
     }
