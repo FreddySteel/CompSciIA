@@ -13,6 +13,7 @@ public class Main {
                 ArrayList<String> order = Order.takeOrder();
                 Invoice invoice = Invoice.invoiceGenerator(order);
                 manager.addInvoice(invoice);
+
             } else if(input == 2){
                 manager.getAllInvoices();
             } else if(input == 3){

@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 public class Order {
-    private static invoiceManagers invoiceManager = new invoiceManagers();
 
     public static ArrayList<String> takeOrder() {
         Scanner scanner = new Scanner(System.in);
