@@ -26,7 +26,7 @@ public class invoiceManagers {
         for (Invoice invoice : invoices) {
             invoicesString.append(invoice.toString()).append("\n");
         }
-        FileHandling.WriteToFile("invoices", invoicesString.toString(), false);
+        FileHandling.WriteToFile("Invoices", invoicesString.toString(), false);
         System.out.println("Invoices written to file: invoices");
     }
 }
