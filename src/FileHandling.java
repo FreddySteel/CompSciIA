@@ -75,23 +75,5 @@ public class FileHandling {
             e.printStackTrace();
         }
     }
-
-    public static void displayStock(String filename) {
-        ArrayList list = FileHandling.WholeFileRead(filename);
-        for (int i = 0; i < list.size(); i++) {
-            System.out.print(list.get(i));
-            System.out.println("");
-
-            // public static class EditInventory(String fileName) {
-
-            // Read the current line and replace the number
-            //String line = raf.readLine();
-            //String[] parts = line.split(",");
-            //parts[0] = Integer.toString(newNumber);
-            //String newLine = String.join(",", parts);
-            //   }
-
-        }
-    }
 }
 
