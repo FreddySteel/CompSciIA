@@ -11,6 +11,7 @@ public class GUI extends JPanel implements ActionListener {
     JButton button2;
     JButton button3;
     JLabel title, subTitle;
+    JButton buttonEditInvoice;
 
     public GUI(int width, int height) {
         System.out.println("SEQUENCE: GUI constructor");
@@ -38,6 +39,10 @@ public class GUI extends JPanel implements ActionListener {
         button2.addActionListener(this);
         add(button3);
         button3.addActionListener(this);
+        buttonEditInvoice = new JButton("Edit Invoice");
+        buttonEditInvoice.setBounds(220,340, 160, 55);
+        add(buttonEditInvoice);
+        buttonEditInvoice.addActionListener(this);
     }
 
     @Override
@@ -52,6 +57,31 @@ public class GUI extends JPanel implements ActionListener {
             textArea.setEditable(false);
             JScrollPane scrollPane = new JScrollPane(textArea);
             JOptionPane.showMessageDialog(null, scrollPane, "Stock List", JOptionPane.INFORMATION_MESSAGE);
+        }
+        if (e.getActionCommand().equals("Invoices")) {
+            ArrayList<String> invoices = FileHandling.WholeFileRead("Invoices");
+            StringBuilder output = new StringBuilder();
+            for (String invoice : invoices) {
+                output.append(invoice).append("\n");
+            }
+
+            JTextArea textArea = new JTextArea(output.toString());
+            textArea.setEditable(false);
+
+            JScrollPane scrollPane = new JScrollPane(textArea);
+            scrollPane.setPreferredSize(new Dimension(500, 500)); // You can adjust these dimensions as needed
+
+            JOptionPane.showMessageDialog(null, scrollPane, "Invoices", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else if (e.getActionCommand().equals("Edit Invoice")) {
+            String customerName = JOptionPane.showInputDialog("Enter the customer's name:");
+            String oldProductName = JOptionPane.showInputDialog("Enter the name of the product to be replaced:");
+            String newProductName = JOptionPane.showInputDialog("Enter the new product's name:");
+            double newProductPrice = Double.parseDouble(JOptionPane.showInputDialog("Enter the new product's price:"));
+
+            Product oldProduct = new Product(oldProductName, -1);  // Price doesn't matter for old product
+            Product newProduct = new Product(newProductName, newProductPrice);
+            Invoice.updateInvoiceInFile(customerName, oldProduct, newProduct);
         }
     }
 }

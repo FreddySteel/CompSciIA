@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.ArrayList;
 
 public class Invoice {
@@ -70,5 +71,35 @@ public class Invoice {
         }
         invoiceString.append("Total Cost: $").append(String.format("%.2f", totalCost)).append("\n");
         return invoiceString.toString();
+    }
+    public void updateProduct(Product oldProduct, Product newProduct) {
+        int index = products.indexOf(oldProduct);
+        if (index != -1) {
+            products.set(index, newProduct);
+            calculateTotalCost();
+        }
+    }
+
+    public static void updateInvoiceInFile(String customerName, Product oldProduct, Product newProduct) {
+        ArrayList<String> invoices = FileHandling.WholeFileRead("Invoices");
+        ArrayList<String> updatedInvoices = new ArrayList<>();
+
+        for (String invoice : invoices) {
+            if (invoice.contains("Invoice for " + customerName)) {
+                String updatedInvoice = invoice.replace(oldProduct.toString(), newProduct.toString());
+                updatedInvoices.add(updatedInvoice);
+            } else {
+                updatedInvoices.add(invoice);
+            }
+        }
+
+        // Delete the old file
+        File oldFile = new File("Invoices");
+        oldFile.delete();
+
+        // Write the updated invoices to the file
+        for (String updatedInvoice : updatedInvoices) {
+            FileHandling.WriteToFile("Invoices", updatedInvoice, true);
+        }
     }
 }
