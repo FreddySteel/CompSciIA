@@ -11,7 +11,25 @@ public class Invoice {
         this.products = new ArrayList<>();
         this.totalCost = 0;
     }
-
+    public Invoice (ArrayList<String> order) {
+        String customerName = order.get(0);
+        String customerNumber = order.get(1);
+        Customer customer = new Customer(customerName, customerNumber);
+        // Add the products to the invoice
+        for (int j = 2; j < order.size(); j++) {
+            String[] productOrder = order.get(j).split(" ");
+            String productName = productOrder[0];
+            System.out.println(productOrder[1]);
+            int productQuantity = Integer.parseInt(productOrder[1]);
+            double productPrice = stockList.getProductPrice(productName);
+            Product product = new Product(productName, productPrice);
+            for (int i = 0; i < productQuantity; i++) {
+                this.addProduct(product);
+            }
+        }
+        // Calculate the total cost and add the invoice to the list
+        this.calculateTotalCost();
+    }
     public void addProduct(Product product) {
         products.add(product);
         totalCost += product.getPrice();
@@ -77,29 +95,6 @@ public class Invoice {
         if (index != -1) {
             products.set(index, newProduct);
             calculateTotalCost();
-        }
-    }
-
-    public static void updateInvoiceInFile(String customerName, Product oldProduct, Product newProduct) {
-        ArrayList<String> invoices = FileHandling.WholeFileRead("Invoices");
-        ArrayList<String> updatedInvoices = new ArrayList<>();
-
-        for (String invoice : invoices) {
-            if (invoice.contains("Invoice for " + customerName)) {
-                String updatedInvoice = invoice.replace(oldProduct.toString(), newProduct.toString());
-                updatedInvoices.add(updatedInvoice);
-            } else {
-                updatedInvoices.add(invoice);
-            }
-        }
-
-        // Delete the old file
-        File oldFile = new File("Invoices");
-        oldFile.delete();
-
-        // Write the updated invoices to the file
-        for (String updatedInvoice : updatedInvoices) {
-            FileHandling.WriteToFile("Invoices", updatedInvoice, true);
         }
     }
 }
