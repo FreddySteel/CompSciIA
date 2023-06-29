@@ -11,21 +11,21 @@ public class Invoice {
         this.products = new ArrayList<>();
         this.totalCost = 0;
     }
-    public Invoice (ArrayList<String> order) {
+
+    public Invoice(ArrayList<String> order) {
+        this.products = new ArrayList<>(); // Instantiate products ArrayList
         String customerName = order.get(0);
         String customerNumber = order.get(1);
         Customer customer = new Customer(customerName, customerNumber);
+        this.customer = customer; // Set this.customer to the created customer
         // Add the products to the invoice
         for (int j = 2; j < order.size(); j++) {
             String[] productOrder = order.get(j).split(" ");
             String productName = productOrder[0];
             System.out.println(productOrder[1]);
-            int productQuantity = Integer.parseInt(productOrder[1]);
             double productPrice = stockList.getProductPrice(productName);
             Product product = new Product(productName, productPrice);
-            for (int i = 0; i < productQuantity; i++) {
-                this.addProduct(product);
-            }
+            this.addProduct(product);
         }
         // Calculate the total cost and add the invoice to the list
         this.calculateTotalCost();
