@@ -1,18 +1,14 @@
 import javax.swing.*;
+
 public class Main {
     public static void main(String[] args) {
-
-        new invoiceManagers("Invoices");
-
-        // demo GUI
+        invoiceManagers manager = new invoiceManagers("Invoices");
         System.out.println("SEQUENCE: Program started");
         JFrame frame = new JFrame("Demo frame");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        GUI myGUI = new GUI(600, 400);
+        GUI myGUI = new GUI(600, 400, manager); // passing the manager to GUI
         frame.add(myGUI);
         frame.pack();
         frame.setVisible(true);
     }
 }
-   // Scanner scanner = new Scanner(System.in);
-    //invoiceManagers manager = new invoiceManagers(); // Create the invoiceManagers object outside the while loop

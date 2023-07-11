@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Set;
+
 
 public class GUI extends JPanel implements ActionListener {
     JButton button1;
@@ -11,8 +11,9 @@ public class GUI extends JPanel implements ActionListener {
     JButton button3;
     JLabel title, subTitle;
     JButton SettingButton;
-
-    public GUI(int width, int height) {
+    invoiceManagers manager;
+    public GUI(int width, int height, invoiceManagers manager) {
+        this.manager = manager;
         System.out.println("SEQUENCE: GUI constructor");
         this.setPreferredSize(new Dimension(width, height));
         setLayout(null);
@@ -56,17 +57,26 @@ public class GUI extends JPanel implements ActionListener {
             textArea.setEditable(false);
             JScrollPane scrollPane = new JScrollPane(textArea);
             JOptionPane.showMessageDialog(null, scrollPane, "Stock List", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, scrollPane, "Invoices", JOptionPane.INFORMATION_MESSAGE);
         }
         if (e.getActionCommand().equals("Invoices")) {
-            ArrayList<String> invoices = FileHandling.WholeFileRead("Invoices");
-            StringBuilder output = new StringBuilder();
-            JTextArea textArea = new JTextArea(output.toString());
-            textArea.setEditable(false);
+            JFrame invoiceFrame = new JFrame("Invoices");
+            invoiceFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose this frame when closed, not exit the entire program
+            InvoiceGUI invoiceGUI = new InvoiceGUI();
+            invoiceFrame.add(invoiceGUI);
+            invoiceFrame.pack();
+            invoiceFrame.setVisible(true);
 
-            JScrollPane scrollPane = new JScrollPane(textArea);
-            scrollPane.setPreferredSize(new Dimension(500, 500)); // You can adjust these dimensions as needed
+        }
+        if (e.getActionCommand().equals("Take Order")) {
+            String[] products = stockList.productsInStock();
 
-            JOptionPane.showMessageDialog(null, scrollPane, "Invoices", JOptionPane.INFORMATION_MESSAGE);
+            String[] customers = FileHandling.fileToArray("Customers", FileHandling.numOfLines("Customers"));
+
+            for (String customer : customers) {
+                String[][] customerInfo = new String[][]{customer.split(",")};
+                SwingUtilities.invokeLater(() -> new OrderGUI(customerInfo, products, manager));
+            }
         }
     }
 }
