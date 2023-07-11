@@ -33,7 +33,7 @@ public class GUI extends JPanel implements ActionListener {
         button3 = new JButton("Invoices");
         button3.setBounds(220,270, 160, 55);
         SettingButton = new JButton("Settings");
-        SettingButton.setBounds(0,0, 60, 35);
+        SettingButton.setBounds(0,0, 100, 35);
         add(button1);
         button1.addActionListener(this);
         add(button2);

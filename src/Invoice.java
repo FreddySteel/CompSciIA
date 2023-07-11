@@ -22,7 +22,6 @@ public class Invoice {
         for (int j = 2; j < order.size(); j++) {
             String[] productOrder = order.get(j).split(" ");
             String productName = productOrder[0];
-            System.out.println(productOrder[1]);
             double productPrice = stockList.getProductPrice(productName);
             Product product = new Product(productName, productPrice);
             this.addProduct(product);
