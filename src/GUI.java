@@ -78,5 +78,20 @@ public class GUI extends JPanel implements ActionListener {
                 SwingUtilities.invokeLater(() -> new OrderGUI(customerInfo, products, manager));
             }
         }
+        if (e.getActionCommand().equals("Settings")) {
+            JFrame settingsFrame = new JFrame("Settings");
+            settingsFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+            // Set the frame size
+            settingsFrame.setSize(500, 500); // Width and height in pixels
+
+            // Center the frame
+            settingsFrame.setLocationRelativeTo(null);
+
+            SettingsGUI settingsGUI = new SettingsGUI();
+            settingsFrame.add(settingsGUI);
+
+            settingsFrame.setVisible(true);
+        }
     }
 }
