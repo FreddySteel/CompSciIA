@@ -49,6 +49,7 @@ public class OrderGUI extends JFrame {
                 }
             }
         });
+
         JPanel nextPanel = new JPanel();
         nextPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         nextPanel.add(next);
@@ -70,10 +71,6 @@ public class OrderGUI extends JFrame {
         ArrayList<String> order = new ArrayList<>();
         order.add(customers[currentCustomerIndex][0]);
         order.add(customers[currentCustomerIndex][1]);
-
-        for (int i = 0; i < products.length; i++) {
-            order.add(products[i] + " " + quantities[i].getText());
-        }
 
         Invoice invoice = Invoice.invoiceGenerator(order);
         manager.addInvoice(invoice);
