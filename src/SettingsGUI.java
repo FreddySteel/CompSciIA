@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class SettingsGUI extends JPanel {
+public class SettingsGUI extends JPanel implements ActionListener {
     private JButton editCustomersButton;
     private JButton editInventoryButton;
     private JButton editInvoicesButton;
@@ -13,6 +15,11 @@ public class SettingsGUI extends JPanel {
         editCustomersButton = createButton("Edit Customers");
         editInventoryButton = createButton("Edit Inventory");
         editInvoicesButton = createButton("Edit Invoices");
+
+        // Add action listeners
+        editCustomersButton.addActionListener(this);
+        editInventoryButton.addActionListener(this);
+        editInvoicesButton.addActionListener(this);
 
         // Add buttons to panel
         add(Box.createVerticalGlue());
@@ -26,8 +33,19 @@ public class SettingsGUI extends JPanel {
 
     private JButton createButton(String text) {
         JButton button = new JButton(text);
-        button.setMaximumSize(new Dimension(300, 500)); // Sets max width and height
+        button.setMaximumSize(new Dimension(300, 50)); // Sets max width and height
         button.setAlignmentX(CENTER_ALIGNMENT); // Center alignment
         return button;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Edit Customers")) {
+            new EditCustomersGUI().setVisible(true);
+        } else if (e.getActionCommand().equals("Edit Inventory")) {
+            // call method to edit Inventory
+        } else if (e.getActionCommand().equals("Edit Invoices")) {
+            // call method to edit Invoices
+        }
     }
 }
