@@ -94,13 +94,22 @@ public class GUI extends JPanel implements ActionListener {
     private void showNextCustomerOrder(String[] products) {
         if (!customersQueue.isEmpty()) {
             String customer = customersQueue.poll();  // Take the next customer from the queue
-            String[][] customerInfo = new String[][]{{customer.split(",")[0], customer.split(",")[1]}};
 
-            // Open the OrderGUI for the next customer.
-            SwingUtilities.invokeLater(() -> new OrderGUI(customerInfo, products, manager, GUI.this::showNextCustomerOrder));
-        }
-        // If the queue is empty, you might want to show a message or take another action.
-        else {
+            String[] splitCustomer = customer.split(",");
+            if (splitCustomer.length >= 2) {
+                String[][] customerInfo = new String[][]{{splitCustomer[0], splitCustomer[1]}};
+
+                // Open the OrderGUI for the next customer.
+                SwingUtilities.invokeLater(() -> new OrderGUI(customerInfo, products, manager, GUI.this::showNextCustomerOrder));
+            } else {
+                // Handle the error, maybe log it or show an error message
+                System.err.println("Invalid customer format: " + customer);
+                // Optionally, you can continue with the next customer even if one is malformed
+                showNextCustomerOrder(products);
+            }
+
+        } else {
+            // If the queue is empty, you might want to show a message or take another action.
             JOptionPane.showMessageDialog(this, "All customer orders processed.");
         }
     }
