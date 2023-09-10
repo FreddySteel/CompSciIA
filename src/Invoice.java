@@ -2,16 +2,16 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class Invoice {
+    private static stockList stockList;
     private Customer customer;
     private ArrayList<Product> products;
     private double totalCost;
 
     public Invoice(Customer customer) {
         this.customer = customer;
-        this.products = new ArrayList<>();
-        this.totalCost = 0;
+        this.products = new ArrayList<>(); // Initialize the products list
+        this.totalCost = 0; // Initialize total cost
     }
-
     public Invoice(ArrayList<String> order) {
         this.products = new ArrayList<>(); // Instantiate products ArrayList
         String customerName = order.get(0);
@@ -64,10 +64,6 @@ public class Invoice {
             String productName = productOrder[0];
             int productQuantity = Integer.parseInt(productOrder[1]);
             double productPrice = stockList.getProductPrice(productName);
-            //if (productPrice < 0) {
-            //     System.out.println("Error: product " + productName + " not found");
-            //    continue;  // Skip this product
-            // }
             Product product = new Product(productName, productPrice);
             for (int i = 0; i < productQuantity; i++) {
                 invoice.addProduct(product);

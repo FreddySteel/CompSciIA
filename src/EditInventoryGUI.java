@@ -83,10 +83,9 @@ public class EditInventoryGUI extends JFrame {
         setLocationRelativeTo(null); // Center window on screen
     }
 
-    // Assuming you'll add this method in your SettingsGUI actionPerformed method
     public void showGUI() {
         this.setVisible(true);
     }
 
-    // ... rest of the class
+
 }

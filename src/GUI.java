@@ -3,6 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
 
 
 public class GUI extends JPanel implements ActionListener {
@@ -12,6 +15,7 @@ public class GUI extends JPanel implements ActionListener {
     JLabel title, subTitle;
     JButton SettingButton;
     invoiceManagers manager;
+    Queue<String> customersQueue = new LinkedList<>();
     public GUI(int width, int height, invoiceManagers manager) {
         this.manager = manager;
         System.out.println("SEQUENCE: GUI constructor");
@@ -64,10 +68,12 @@ public class GUI extends JPanel implements ActionListener {
 
             String[] customers = FileHandling.fileToArray("Customers", FileHandling.numOfLines("Customers"));
 
+            // Populate the queue
             for (String customer : customers) {
-                String[][] customerInfo = new String[][]{customer.split(",")};
-                SwingUtilities.invokeLater(() -> new OrderGUI(customerInfo, products, manager));
+                customersQueue.offer(customer);
             }
+
+            showNextCustomerOrder(products);  // Kick off the sequence
         }
         if (e.getActionCommand().equals("Settings")) {
             JFrame settingsFrame = new JFrame("Settings");
@@ -85,4 +91,18 @@ public class GUI extends JPanel implements ActionListener {
             settingsFrame.setVisible(true);
         }
     }
+    private void showNextCustomerOrder(String[] products) {
+        if (!customersQueue.isEmpty()) {
+            String customer = customersQueue.poll();  // Take the next customer from the queue
+            String[][] customerInfo = new String[][]{{customer.split(",")[0], customer.split(",")[1]}};
+
+            // Open the OrderGUI for the next customer.
+            SwingUtilities.invokeLater(() -> new OrderGUI(customerInfo, products, manager, GUI.this::showNextCustomerOrder));
+        }
+        // If the queue is empty, you might want to show a message or take another action.
+        else {
+            JOptionPane.showMessageDialog(this, "All customer orders processed.");
+        }
+    }
+
 }
