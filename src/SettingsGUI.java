@@ -43,9 +43,9 @@ public class SettingsGUI extends JPanel implements ActionListener {
         if (e.getActionCommand().equals("Edit Customers")) {
             new EditCustomersGUI().setVisible(true);
         } else if (e.getActionCommand().equals("Edit Inventory")) {
-            // call method to edit Inventory
+            new EditInventoryGUI().setVisible(true);
         } else if (e.getActionCommand().equals("Edit Invoices")) {
-            // call method to edit Invoices
+            new EditInvoicesGUI().setVisible(true);
         }
     }
 }

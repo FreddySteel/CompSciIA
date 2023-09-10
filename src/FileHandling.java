@@ -75,5 +75,25 @@ public class FileHandling {
             e.printStackTrace();
         }
     }
-}
 
+    public static void overwriteFile(String filename, ArrayList<String> data) {
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(filename);
+
+            for (String line : data) {
+                writer.write(line + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+}

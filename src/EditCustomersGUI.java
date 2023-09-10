@@ -4,101 +4,120 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class EditCustomersGUI extends JFrame implements ActionListener {
+public class EditCustomersGUI extends JFrame {
+
+    private DefaultListModel<String> customerListModel;
+    private JList<String> customersList;
     private JTextField customerNameField;
-    private JTextField phoneNumberField;
+    private JTextField customerPhoneField;
     private JButton addButton;
-    private JButton editButton;
-    private JButton deleteButton;
-    private JComboBox<String> customerList;
+    private JButton updateButton;
+    private JButton removeButton;
+    private final int MAX_VISIBLE_ROWS = 10; // Define max number of visible rows without scrolling
+
 
     public EditCustomersGUI() {
-        super("Edit Customers");
+        setTitle("Edit Customers");
+        setLayout(new BorderLayout());
 
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLayout(new FlowLayout());
+        // Central Panel with the customer list
+        customerListModel = new DefaultListModel<>();
+        populateCustomerList();
+        customersList = new JList<>(customerListModel);
 
-        customerNameField = new JTextField(20);
-        phoneNumberField = new JTextField(10);
+        // Set visible row count
+        customersList.setVisibleRowCount(Math.min(customerListModel.getSize(), MAX_VISIBLE_ROWS));
 
+        JScrollPane listScrollPane = new JScrollPane(customersList);
+        add(listScrollPane, BorderLayout.CENTER);
+
+        // South Panel with input fields and buttons
+        JPanel southPanel = new JPanel(new FlowLayout());
+
+        // Fields for name and phone
+        customerNameField = new JTextField(15);
+        customerPhoneField = new JTextField(15);
+        southPanel.add(new JLabel("Name:"));
+        southPanel.add(customerNameField);
+        southPanel.add(new JLabel("Phone:"));
+        southPanel.add(customerPhoneField);
+
+        // Buttons to add, remove, and update customers
         addButton = new JButton("Add");
-        editButton = new JButton("Edit");
-        deleteButton = new JButton("Delete");
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleButtonActions(e);
+            }
+        });
+        southPanel.add(addButton);
 
-        addButton.addActionListener(this);
-        editButton.addActionListener(this);
-        deleteButton.addActionListener(this);
+        updateButton = new JButton("Update");
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleButtonActions(e);
+            }
+        });
+        southPanel.add(updateButton);
 
-        String[] customers = FileHandling.fileToArray("Customers", FileHandling.numOfLines("Customers"));
-        customerList = new JComboBox<>(customers);
+        removeButton = new JButton("Remove");
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleButtonActions(e);
+            }
+        });
+        southPanel.add(removeButton);
 
-        add(new JLabel("Customer Name: "));
-        add(customerNameField);
-        add(new JLabel("Phone Number: "));
-        add(phoneNumberField);
-        add(addButton);
-        add(editButton);
-        add(deleteButton);
-        add(new JLabel("Existing Customers: "));
-        add(customerList);
+        add(southPanel, BorderLayout.SOUTH);
 
         pack();
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null); // To center the window on the screen
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String name = customerNameField.getText();
-        String phone = phoneNumberField.getText();
-        String selectedCustomer = (String)customerList.getSelectedItem();
-        String newCustomerName = customerNameField.getText();
-        String newPhoneNumber = phoneNumberField.getText();
-        String customerRecord = newCustomerName + "," + newPhoneNumber;
-
+    private void handleButtonActions(ActionEvent e) {
+        String name = customerNameField.getText().trim();
+        String phone = customerPhoneField.getText().trim();
+        String newCustomer = name + "," + phone;
+        String selectedCustomer = customersList.getSelectedValue();
 
         if (e.getSource() == addButton) {
-            String newCustomer = name + "," + phone;
-            FileHandling.WriteToFile("Customers", newCustomer, true); //append new customer
-            customerList.addItem(newCustomer);
-        } else if (e.getSource() == editButton && selectedCustomer != null) {
-            if (!newCustomerName.isBlank() && !newPhoneNumber.isBlank() && selectedCustomer != null) {
-                // Create an ArrayList of all customers
-                ArrayList<String> customerData = FileHandling.WholeFileRead("Customers");
-
-                // Find and replace the selected customer with the new information
-                for (int i = 0; i < customerData.size(); i++) {
-                    if (customerData.get(i).equals(selectedCustomer)) {
-                        customerData.set(i, customerRecord);
-                        break;
-                    }
+            FileHandling.WriteToFile("Customers", newCustomer, true);
+            customerListModel.addElement(newCustomer);
+        } else if (e.getSource() == updateButton && selectedCustomer != null) {
+            ArrayList<String> customerData = FileHandling.WholeFileRead("Customers");
+            for (int i = 0; i < customerData.size(); i++) {
+                if (customerData.get(i).equals(selectedCustomer)) {
+                    customerData.set(i, newCustomer);
+                    break;
                 }
-
-                // Write the updated customer list back to the file
-                for (int i = 0; i < customerData.size(); i++) {
-                    FileHandling.WriteToFile("Customers", customerData.get(i), i != 0); // Append if not the first item
-                }
-
-                // Update the JComboBox
-                customerList.removeItem(selectedCustomer);
-                customerList.addItem(customerRecord);
-                customerList.setSelectedItem(customerRecord);
             }
-        } else if (e.getSource() == deleteButton && selectedCustomer != null) {
-            if (selectedCustomer != null) {
-                // Create an ArrayList of all customers
-                ArrayList<String> customerData = FileHandling.WholeFileRead("Customers");
-
-                // Find and remove the selected customer from the ArrayList
-                customerData.remove(selectedCustomer);
-
-                // Write the updated customer list back to the file
-                for (int i = 0; i < customerData.size(); i++) {
-                    FileHandling.WriteToFile("Customers", customerData.get(i), i != 0); // Append if not the first item
-                }
-
-                // Remove the customer from the JComboBox
-                customerList.removeItem(selectedCustomer);
+            for (int i = 0; i < customerData.size(); i++) {
+                FileHandling.WriteToFile("Customers", customerData.get(i), i != 0);
             }
+            customerListModel.removeElement(selectedCustomer);
+            customerListModel.addElement(newCustomer);
+        } else if (e.getSource() == removeButton && selectedCustomer != null) {
+            ArrayList<String> customerData = FileHandling.WholeFileRead("Customers");
+            customerData.remove(selectedCustomer);
+            for (int i = 0; i < customerData.size(); i++) {
+                FileHandling.WriteToFile("Customers", customerData.get(i), i != 0);
+            }
+            customerListModel.removeElement(selectedCustomer);
         }
+    }
+
+    private void populateCustomerList() {
+        ArrayList<String> customerData = FileHandling.WholeFileRead("Customers");
+        for (String customer : customerData) {
+            customerListModel.addElement(customer);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            new EditCustomersGUI().setVisible(true);
+        });
     }
 }

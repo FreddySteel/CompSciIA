@@ -50,4 +50,3 @@ public class invoiceManagers {
         System.out.println("Invoices written to file: invoices");
     }
 }
-

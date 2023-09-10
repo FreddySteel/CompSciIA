@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 
 public class stockList {
@@ -19,13 +18,14 @@ public class stockList {
 
         return products;
     }
-        public static double getProductPrice(String productName) {
-            String[] inventory = FileHandling.fileToArray("Inventory", FileHandling.numOfLines("Inventory"));
-            for (String productInfo : inventory) {
-                String[] info = productInfo.split(",");
-                if (info[1].equals(productName)) {
-                    return Double.parseDouble(info[2]);
-                }
-            }return -1;  // Return -1 or throw an exception if product not found
+    public static double getProductPrice(String productName) {
+        String[] inventory = FileHandling.fileToArray("Inventory", FileHandling.numOfLines("Inventory"));
+        for (String productInfo : inventory) {
+            String[] info = productInfo.split(",");
+            if (info[1].equals(productName)) {
+                return Double.parseDouble(info[2]);
+            }
+        }return -1;  // Return -1 or throw an exception if product not found
     }
 }
+

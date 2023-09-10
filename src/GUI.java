@@ -48,16 +48,7 @@ public class GUI extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Stock List")) {
-            ArrayList<String> stockList = FileHandling.WholeFileRead("Inventory");
-            StringBuilder output = new StringBuilder("Product, Quantity, Price\n");
-            for (String item : stockList) {
-                output.append(item).append("\n");
-            }
-            JTextArea textArea = new JTextArea(output.toString());
-            textArea.setEditable(false);
-            JScrollPane scrollPane = new JScrollPane(textArea);
-            JOptionPane.showMessageDialog(null, scrollPane, "Stock List", JOptionPane.INFORMATION_MESSAGE);
-            JOptionPane.showMessageDialog(null, scrollPane, "Invoices", JOptionPane.INFORMATION_MESSAGE);
+            new StockListGUI().setVisible(true);
         }
         if (e.getActionCommand().equals("Invoices")) {
             JFrame invoiceFrame = new JFrame("Invoices");

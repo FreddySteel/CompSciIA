@@ -65,9 +65,9 @@ public class Invoice {
             int productQuantity = Integer.parseInt(productOrder[1]);
             double productPrice = stockList.getProductPrice(productName);
             //if (productPrice < 0) {
-           //     System.out.println("Error: product " + productName + " not found");
+            //     System.out.println("Error: product " + productName + " not found");
             //    continue;  // Skip this product
-           // }
+            // }
             Product product = new Product(productName, productPrice);
             for (int i = 0; i < productQuantity; i++) {
                 invoice.addProduct(product);
