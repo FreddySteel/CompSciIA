@@ -49,4 +49,14 @@ public class invoiceManagers {
         FileHandling.WriteToFile("Invoices", invoicesString.toString(), false);
         System.out.println("Invoices written to file: invoices");
     }
+    public List<Invoice> getInvoicesByCustomer(String customerName) {
+        List<Invoice> customerInvoices = new ArrayList<>();
+        for (Invoice invoice : invoices) {
+            if (invoice.getCustomerName().equals(customerName)) {
+                customerInvoices.add(invoice);
+            }
+        }
+        return customerInvoices;
+    }
+
 }

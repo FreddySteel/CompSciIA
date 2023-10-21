@@ -92,4 +92,7 @@ public class Invoice {
             calculateTotalCost();
         }
     }
+    public String getCustomerName() {
+        return customer.getName();
+    }
 }

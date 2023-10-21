@@ -55,13 +55,8 @@ public class GUI extends JPanel implements ActionListener {
             new StockListGUI().setVisible(true);
         }
         if (e.getActionCommand().equals("Invoices")) {
-            JFrame invoiceFrame = new JFrame("Invoices");
-            invoiceFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Dispose this frame when closed, not exit the entire program
             InvoiceGUI invoiceGUI = new InvoiceGUI();
-            invoiceFrame.add(invoiceGUI);
-            invoiceFrame.pack();
-            invoiceFrame.setVisible(true);
-
+            invoiceGUI.setVisible(true);
         }
         if (e.getActionCommand().equals("Take Order")) {
             String[] products = stockList.productsInStock();
