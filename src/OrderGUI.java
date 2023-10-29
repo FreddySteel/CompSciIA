@@ -13,14 +13,20 @@ public class OrderGUI extends JFrame {
     private invoiceManagers manager;
     private String[] products;
     private String[][] customers;
-    private int currentCustomerIndex = 0;
-    private Consumer<String[]> onClosedCallback;
+    private int currentCustomerIndex;
+    private Consumer<Object[]> onClosedCallback;
 
-    public OrderGUI(String[][] customerData, String[] products, invoiceManagers manager, NextCustomerOrderCallback callback) {
-        this.onClosedCallback = callback::show;  // Assign the callback to onClosedCallback
+    public OrderGUI(int currentCustomerIndex, String[][] customerData, String[] products, invoiceManagers manager, NextCustomerOrderCallback callback) {
+        this.currentCustomerIndex = currentCustomerIndex;
+        this.onClosedCallback = args -> {
+            String[] productsArray = (String[]) args[0];
+            int updatedIndex = (Integer) args[1];
+            callback.show(productsArray, updatedIndex);
+        };
         this.customers = customerData;  // Assign customerData to customers
         this.products = products;
         this.manager = manager;
+
 
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLayout(new BorderLayout());
@@ -29,7 +35,8 @@ public class OrderGUI extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         // Initialize the JLabel named customerInfo with customerData
-        customerInfo = new JLabel("Customer: " + this.customers[currentCustomerIndex][0] + " Phone: " + this.customers[currentCustomerIndex][1]);
+        customerInfo = new JLabel("Customer: " + this.customers[0][0] + " Phone: " + this.customers[0][1]);
+
         panel.add(customerInfo);
 
         quantities = new JTextField[products.length];
@@ -42,17 +49,19 @@ public class OrderGUI extends JFrame {
             panel.add(productPanel);
         }
 
-        JButton next = new JButton("Next \u2192");
+        JButton next = new JButton("Next →");
 
         next.addActionListener(e -> {
+            System.out.println("Next button pressed for customer index: " + currentCustomerIndex);
             submitOrder();
-            onClosedCallback.accept(products);
-            this.dispose();  // Close this OrderGUI
+            //onClosedCallback.accept(products);
+              // Close this OrderGUI
         });
 
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                System.out.println("Window closing for customer index: " + currentCustomerIndex);
                 onClosedCallback.accept(products);
             }
         });
@@ -75,7 +84,8 @@ public class OrderGUI extends JFrame {
     }
 
     private void submitOrder() {
-        if (!isValidOrder()) {
+        System.out.println("submitOrder called for customer index: " + currentCustomerIndex);
+        if (!isValidOrder() || currentCustomerIndex >= customers.length) {
             return;
         }
         ArrayList<String> order = new ArrayList<>();
@@ -86,12 +96,20 @@ public class OrderGUI extends JFrame {
             String product = products[i];
             String quantity = quantities[i].getText().trim();
 
-            order.add(product);
-            order.add(quantity);
+            order.add(product + " " + quantity);
         }
-
+        currentCustomerIndex++;  // Move to the next customer
+        if (currentCustomerIndex < customers.length) {
+            onClosedCallback.accept(new Object[] {products, currentCustomerIndex});  // Pass currentCustomerIndex to the GUI class
+        } else {
+            this.dispose();  // Close GUI when all customers are processed
+        }
         Invoice invoice = Invoice.invoiceGenerator(order);
         manager.addInvoice(invoice);
+        manager.writeInvoicesToFile(); //saves the invoices to a file
+        onClosedCallback.accept(products);
+        System.out.println("submitOrder finished for customer index: " + currentCustomerIndex);
+
     }
     private boolean isValidOrder() {
         for (JTextField quantity : quantities) {
@@ -104,6 +122,6 @@ public class OrderGUI extends JFrame {
         return true;
     }
     public interface NextCustomerOrderCallback {
-        void show(String[] products);
+        void show(String[] products, int updatedIndex);
     }
 }

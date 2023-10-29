@@ -18,6 +18,7 @@ public class stockList {
 
         return products;
     }
+
     public static double getProductPrice(String productName) {
         String[] inventory = FileHandling.fileToArray("Inventory", FileHandling.numOfLines("Inventory"));
         for (String productInfo : inventory) {
@@ -25,7 +26,8 @@ public class stockList {
             if (info[1].equals(productName)) {
                 return Double.parseDouble(info[2]);
             }
-        }return -1;  // Return -1 or throw an exception if product not found
+        }
+        return -1;  // Return -1 or throw an exception if product not found
     }
 }
 

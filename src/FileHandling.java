@@ -73,6 +73,7 @@ public class FileHandling {
             pw.close();
         } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("Failed to write to file: " + fileName);
         }
     }
 

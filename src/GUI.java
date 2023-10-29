@@ -9,6 +9,7 @@ import java.util.Queue;
 
 
 public class GUI extends JPanel implements ActionListener {
+    private int currentCustomerIndex = 0;
     JButton button1;
     JButton button2;
     JButton button3;
@@ -60,14 +61,11 @@ public class GUI extends JPanel implements ActionListener {
         }
         if (e.getActionCommand().equals("Take Order")) {
             String[] products = stockList.productsInStock();
-
             String[] customers = FileHandling.fileToArray("Customers", FileHandling.numOfLines("Customers"));
 
-            // Populate the queue
             for (String customer : customers) {
                 customersQueue.offer(customer);
             }
-
             showNextCustomerOrder(products);  // Kick off the sequence
         }
         if (e.getActionCommand().equals("Settings")) {
@@ -86,7 +84,7 @@ public class GUI extends JPanel implements ActionListener {
             settingsFrame.setVisible(true);
         }
     }
-    private void showNextCustomerOrder(String[] products) {
+    private void showNextCustomerOrder(String[] products, int updatedIndex) {
         if (!customersQueue.isEmpty()) {
             String customer = customersQueue.poll();  // Take the next customer from the queue
 
@@ -94,8 +92,9 @@ public class GUI extends JPanel implements ActionListener {
             if (splitCustomer.length >= 2) {
                 String[][] customerInfo = new String[][]{{splitCustomer[0], splitCustomer[1]}};
 
-                // Open the OrderGUI for the next customer.
-                SwingUtilities.invokeLater(() -> new OrderGUI(customerInfo, products, manager, GUI.this::showNextCustomerOrder));
+                // Pass currentCustomerIndex to the OrderGUI constructor
+                SwingUtilities.invokeLater(() -> new OrderGUI(currentCustomerIndex, customerInfo, products, manager, GUI.this::showNextCustomerOrder));
+                currentCustomerIndex++;  // Increment currentCustomerIndex for the next customer
             } else {
                 // Handle the error, maybe log it or show an error message
                 System.err.println("Invalid customer format: " + customer);
@@ -107,6 +106,9 @@ public class GUI extends JPanel implements ActionListener {
             // If the queue is empty, you might want to show a message or take another action.
             JOptionPane.showMessageDialog(this, "All customer orders processed.");
         }
+    }
+    private void showNextCustomerOrder(String[] products) {
+        showNextCustomerOrder(products, currentCustomerIndex);
     }
 
 }
