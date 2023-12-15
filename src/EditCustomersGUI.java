@@ -17,7 +17,7 @@ public class EditCustomersGUI extends JFrame {
 
 
     public EditCustomersGUI() {
-        setTitle("Edit Customers");
+        setTitle("Edit Customers.txt");
         setLayout(new BorderLayout());
 
         // Central Panel with the customer list
@@ -83,10 +83,10 @@ public class EditCustomersGUI extends JFrame {
         String selectedCustomer = customersList.getSelectedValue();
 
         if (e.getSource() == addButton) {
-            FileHandling.WriteToFile("Customers", newCustomer, true);
+            FileHandling.WriteToFile("Customers.txt", newCustomer, true);
             customerListModel.addElement(newCustomer);
         } else if (e.getSource() == updateButton && selectedCustomer != null) {
-            ArrayList<String> customerData = FileHandling.WholeFileRead("Customers");
+            ArrayList<String> customerData = FileHandling.WholeFileRead("Customers.txt");
             for (int i = 0; i < customerData.size(); i++) {
                 if (customerData.get(i).equals(selectedCustomer)) {
                     customerData.set(i, newCustomer);
@@ -94,22 +94,22 @@ public class EditCustomersGUI extends JFrame {
                 }
             }
             for (int i = 0; i < customerData.size(); i++) {
-                FileHandling.WriteToFile("Customers", customerData.get(i), i != 0);
+                FileHandling.WriteToFile("Customers.txt", customerData.get(i), i != 0);
             }
             customerListModel.removeElement(selectedCustomer);
             customerListModel.addElement(newCustomer);
         } else if (e.getSource() == removeButton && selectedCustomer != null) {
-            ArrayList<String> customerData = FileHandling.WholeFileRead("Customers");
+            ArrayList<String> customerData = FileHandling.WholeFileRead("Customers.txt");
             customerData.remove(selectedCustomer);
             for (int i = 0; i < customerData.size(); i++) {
-                FileHandling.WriteToFile("Customers", customerData.get(i), i != 0);
+                FileHandling.WriteToFile("Customers.txt", customerData.get(i), i != 0);
             }
             customerListModel.removeElement(selectedCustomer);
         }
     }
 
     private void populateCustomerList() {
-        ArrayList<String> customerData = FileHandling.WholeFileRead("Customers");
+        ArrayList<String> customerData = FileHandling.WholeFileRead("Customers.txt");
         for (String customer : customerData) {
             customerListModel.addElement(customer);
         }

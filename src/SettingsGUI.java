@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class SettingsGUI extends JPanel implements ActionListener {
     private JButton editCustomersButton;
@@ -12,9 +14,9 @@ public class SettingsGUI extends JPanel implements ActionListener {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Create buttons with reduced size
-        editCustomersButton = createButton("Edit Customers");
-        editInventoryButton = createButton("Edit Inventory");
-        editInvoicesButton = createButton("Edit Invoices");
+        editCustomersButton = createButton("Edit Customers.txt");
+        editInventoryButton = createButton("Edit Inventory.txt");
+        editInvoicesButton = createButton("Edit Invoices.txt");
 
         // Add action listeners
         editCustomersButton.addActionListener(this);
@@ -40,12 +42,36 @@ public class SettingsGUI extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Edit Customers")) {
+        if (e.getActionCommand().equals("Edit Customers.txt")) {
+            File file = new File("Customers.txt");
+            if (!file.exists()){
+                try {
+                    file.createNewFile();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             new EditCustomersGUI().setVisible(true);
-        } else if (e.getActionCommand().equals("Edit Inventory")) {
+        } else if (e.getActionCommand().equals("Edit Inventory.txt")) {
+            File file = new File("Inventory.txt");
+            if (!file.exists()){
+                try {
+                    file.createNewFile();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             new EditInventoryGUI().setVisible(true);
-        } else if (e.getActionCommand().equals("Edit Invoices")) {
+        } else if (e.getActionCommand().equals("Edit Invoices.txt")) {
+            File file = new File("Invoices.txt");
+            if (!file.exists()){
+                try {
+                    file.createNewFile();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
             new EditInvoicesGUI().setVisible(true);
-        }
+        }// Make this a method !!!
     }
 }

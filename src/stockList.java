@@ -6,9 +6,9 @@ public class stockList {
 
     public static String[] productsInStock() {
         int k = 0;
-        String[] products = new String[FileHandling.numOfLines("Inventory")];
-        //String[] list = FileHandling.fileToArray("Inventory", FileHandling.numOfLines("Inventory"));
-        String[] list = FileHandling.fileToArray("Inventory", FileHandling.numOfLines("Inventory"));
+        String[] products = new String[FileHandling.numOfLines("Inventory.txt")];
+        //String[] list = FileHandling.fileToArray("Inventory.txt", FileHandling.numOfLines("Inventory.txt"));
+        String[] list = FileHandling.fileToArray("Inventory.txt", FileHandling.numOfLines("Inventory.txt"));
         for (String product : list) {
             String[] line = product.split(",");
             String prod = line[1];
@@ -20,7 +20,7 @@ public class stockList {
     }
 
     public static double getProductPrice(String productName) {
-        String[] inventory = FileHandling.fileToArray("Inventory", FileHandling.numOfLines("Inventory"));
+        String[] inventory = FileHandling.fileToArray("Inventory.txt", FileHandling.numOfLines("Inventory.txt"));
         for (String productInfo : inventory) {
             String[] info = productInfo.split(",");
             if (info[1].equals(productName)) {

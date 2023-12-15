@@ -4,7 +4,7 @@ public class Order {
 
     public static void takeOrder(invoiceManagers manager) {
         Scanner scanner = new Scanner(System.in);
-        String[] customers = FileHandling.fileToArray("Customers", FileHandling.numOfLines("Customers"));
+        String[] customers = FileHandling.fileToArray("Customers.txt", FileHandling.numOfLines("Customers.txt"));
         String[] products = stockList.productsInStock();
 
         for (String customer : customers) {

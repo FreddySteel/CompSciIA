@@ -12,7 +12,7 @@ public class EditInventoryGUI extends JFrame {
     private DefaultListModel<String> listModel;
 
     public EditInventoryGUI() {
-        setTitle("Edit Inventory");
+        setTitle("Edit Inventory.txt");
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 

@@ -13,7 +13,7 @@ public class EditInvoicesGUI extends JFrame {
     private JButton editButton, deleteButton, addButton, saveButton;
 
     public EditInvoicesGUI() {
-        setTitle("Edit Invoices");
+        setTitle("Edit Invoices.txt");
         setSize(500, 300);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new FlowLayout());
@@ -49,7 +49,7 @@ public class EditInvoicesGUI extends JFrame {
     }
 
     private ArrayList<String> getInvoiceNames() {
-        ArrayList<String> invoices = FileHandling.WholeFileRead("Invoices");
+        ArrayList<String> invoices = FileHandling.WholeFileRead("Invoices.txt");
         ArrayList<String> invoiceNames = new ArrayList<>();
         Pattern pattern = Pattern.compile("Invoice for (.+)");
         for (String line : invoices) {
@@ -67,7 +67,7 @@ public class EditInvoicesGUI extends JFrame {
             return;
         }
 
-        ArrayList<String> invoices = FileHandling.WholeFileRead("Invoices");
+        ArrayList<String> invoices = FileHandling.WholeFileRead("Invoices.txt");
         StringBuilder invoiceData = new StringBuilder();
         boolean record = false;
         for (String line : invoices) {
@@ -101,7 +101,7 @@ public class EditInvoicesGUI extends JFrame {
                 "Delete Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 
         if (result == JOptionPane.YES_OPTION) {
-            ArrayList<String> invoices = FileHandling.WholeFileRead("Invoices");
+            ArrayList<String> invoices = FileHandling.WholeFileRead("Invoices.txt");
             boolean removing = false;
             for (int i = 0; i < invoices.size(); i++) {
                 if (invoices.get(i).contains("Invoice for " + selectedCustomer)) {
@@ -115,7 +115,7 @@ public class EditInvoicesGUI extends JFrame {
                     }
                 }
             }
-            FileHandling.overwriteFile("Invoices", invoices);  // Assuming this method exists
+            FileHandling.overwriteFile("Invoices.txt", invoices);  // Assuming this method exists
         }
     }
 

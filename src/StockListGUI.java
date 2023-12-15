@@ -27,7 +27,7 @@ public class StockListGUI extends JFrame {
     }
 
     private void populateStockTable() {
-        ArrayList<String> stockData = FileHandling.WholeFileRead("Inventory");
+        ArrayList<String> stockData = FileHandling.WholeFileRead("Inventory.txt");
         for (String line : stockData) {
             String[] splitLine = line.split(",");
             String productId = splitLine[0];

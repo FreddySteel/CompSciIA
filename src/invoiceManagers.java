@@ -47,8 +47,8 @@ public class invoiceManagers {
         for (Invoice invoice : invoices) {
             invoicesString.append(invoice.toString()).append("\n");
         }
-        FileHandling.WriteToFile("Invoices", invoicesString.toString(), true);  // Change false to true
-        System.out.println("Invoices written to file: invoices");
+        FileHandling.WriteToFile("Invoices.txt", invoicesString.toString(), true);  // Change false to true
+        System.out.println("Invoices.txt written to file: invoices");
     }
 
     public List<Invoice> getInvoicesByCustomer(String customerName) {

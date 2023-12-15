@@ -36,7 +36,7 @@ public class GUI extends JPanel implements ActionListener {
         button1.setBounds(220,130, 160, 55);
         button2 = new JButton("Stock List");
         button2.setBounds(220,200, 160, 55);
-        button3 = new JButton("Invoices");
+        button3 = new JButton("Invoices.txt");
         button3.setBounds(220,270, 160, 55);
         SettingButton = new JButton("Settings");
         SettingButton.setBounds(0,0, 100, 35);
@@ -55,13 +55,13 @@ public class GUI extends JPanel implements ActionListener {
         if (e.getActionCommand().equals("Stock List")) {
             new StockListGUI().setVisible(true);
         }
-        if (e.getActionCommand().equals("Invoices")) {
+        if (e.getActionCommand().equals("Invoices.txt")) {
             InvoiceGUI invoiceGUI = new InvoiceGUI();
             invoiceGUI.setVisible(true);
         }
         if (e.getActionCommand().equals("Take Order")) {
             String[] products = stockList.productsInStock();
-            String[] customers = FileHandling.fileToArray("Customers", FileHandling.numOfLines("Customers"));
+            String[] customers = FileHandling.fileToArray("Customers.txt", FileHandling.numOfLines("Customers.txt"));
 
             for (String customer : customers) {
                 customersQueue.offer(customer);

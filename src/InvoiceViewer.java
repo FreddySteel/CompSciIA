@@ -17,7 +17,7 @@ public class InvoiceViewer {
         textArea = new JTextArea();
         JScrollPane scrollPane = new JScrollPane(textArea);
 
-        loadInvoicesButton = new JButton("Load Invoices");
+        loadInvoicesButton = new JButton("Load Invoices.txt");
         loadInvoicesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -32,7 +32,7 @@ public class InvoiceViewer {
     }
 
     private void loadInvoices() {
-        ArrayList<String> lines = FileHandling.WholeFileRead("Invoices.txt");
+        ArrayList<String> lines = FileHandling.WholeFileRead("Invoices.txt.txt");
         String text = String.join("\n", lines);
         textArea.setText(text);
     }
