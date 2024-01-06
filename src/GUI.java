@@ -5,22 +5,15 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
-
-
-
 public class GUI extends JPanel implements ActionListener {
-    private int currentCustomerIndex = 0;
-    JButton button1;
-    JButton button2;
-    JButton button3;
-    JLabel title, subTitle;
-    JButton SettingButton;
-    invoiceManagers manager;
-    Queue<String> customersQueue = new LinkedList<>();
+    private Queue<String> customersQueue = new LinkedList<>();
+    private invoiceManagers manager;
+    private JButton button1, button2, button3, SettingButton;
+    private JLabel title, subTitle;
+
     public GUI(int width, int height, invoiceManagers manager) {
         this.manager = manager;
-        System.out.println("SEQUENCE: GUI constructor");
-        this.setPreferredSize(new Dimension(width, height));
+        setPreferredSize(new Dimension(width, height));
         setLayout(null);
 
         title = new JLabel("Main Menu");
@@ -55,18 +48,22 @@ public class GUI extends JPanel implements ActionListener {
         if (e.getActionCommand().equals("Stock List")) {
             new StockListGUI().setVisible(true);
         }
-        if (e.getActionCommand().equals("Invoices.txt")) {
+        if (e.getActionCommand().equals("Invoices")) {
             InvoiceGUI invoiceGUI = new InvoiceGUI();
             invoiceGUI.setVisible(true);
         }
         if (e.getActionCommand().equals("Take Order")) {
+            ArrayList<String> customerLines = FileHandling.WholeFileRead("Customers.txt");
+            String[][] initialCustomerData = convertToCustomerDataArray(customerLines);
             String[] products = stockList.productsInStock();
-            String[] customers = FileHandling.fileToArray("Customers.txt", FileHandling.numOfLines("Customers.txt"));
-
-            for (String customer : customers) {
-                customersQueue.offer(customer);
+            for (String[] customer : initialCustomerData) {
+                if (customer.length >= 2) {
+                    customersQueue.add(customer[0] + "," + customer[1]);
+                }
             }
-            showNextCustomerOrder(products);  // Kick off the sequence
+            // Create and show the OrderGUI
+            OrderGUI orderGUI = new OrderGUI(initialCustomerData, products, manager, customersQueue);
+            orderGUI.setVisible(true);
         }
         if (e.getActionCommand().equals("Settings")) {
             JFrame settingsFrame = new JFrame("Settings");
@@ -84,31 +81,12 @@ public class GUI extends JPanel implements ActionListener {
             settingsFrame.setVisible(true);
         }
     }
-    private void showNextCustomerOrder(String[] products, int updatedIndex) {
-        if (!customersQueue.isEmpty()) {
-            String customer = customersQueue.poll();  // Take the next customer from the queue
-
-            String[] splitCustomer = customer.split(",");
-            if (splitCustomer.length >= 2) {
-                String[][] customerInfo = new String[][]{{splitCustomer[0], splitCustomer[1]}};
-
-                // Pass currentCustomerIndex to the OrderGUI constructor
-                SwingUtilities.invokeLater(() -> new OrderGUI(currentCustomerIndex, customerInfo, products, manager, GUI.this::showNextCustomerOrder));
-                currentCustomerIndex++;  // Increment currentCustomerIndex for the next customer
-            } else {
-                // Handle the error, maybe log it or show an error message
-                System.err.println("Invalid customer format: " + customer);
-                // Optionally, you can continue with the next customer even if one is malformed
-                showNextCustomerOrder(products);
-            }
-
-        } else {
-            // If the queue is empty, you might want to show a message or take another action.
-            JOptionPane.showMessageDialog(this, "All customer orders processed.");
+    private String[][] convertToCustomerDataArray(ArrayList<String> customerLines) {
+        String[][] customerData = new String[customerLines.size()][];
+        for (int i = 0; i < customerLines.size(); i++) {
+            customerData[i] = customerLines.get(i).split(",");
         }
-    }
-    private void showNextCustomerOrder(String[] products) {
-        showNextCustomerOrder(products, currentCustomerIndex);
+        return customerData;
     }
 
 }

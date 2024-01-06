@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class InvoiceGUI extends JFrame {
+    public static String[][] getAllCustomers;
     private JTextField searchField;
     private JList<String> customerList;
     private DefaultListModel<String> listModel;
@@ -80,7 +81,7 @@ public class InvoiceGUI extends JFrame {
         });
     }
 
-    private List<String> getAllCustomers() {
+     private List<String> getAllCustomers() {
         ArrayList<String> fileData = FileHandling.WholeFileRead("Customers.txt");
         List<String> customerNames = new ArrayList<>();
         for (String line : fileData) {
@@ -102,9 +103,8 @@ public class InvoiceGUI extends JFrame {
         System.out.println("Number of invoices found: " + invoices.size());
         StringBuilder invoiceText = new StringBuilder();
         for (Invoice invoice : invoices) {
-            invoiceText.append(invoice.toString()).append("\n");  // Assuming Invoice has a meaningful toString method
+            invoiceText.append(invoice.toString()).append("\n");
         }
-        // Assume you have a JTextArea or other component to display invoices
         invoiceTextArea.setText(invoiceText.toString());
     }
 }
