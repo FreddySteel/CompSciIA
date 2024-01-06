@@ -6,11 +6,13 @@ public class Invoice {
     private Customer customer;
     private ArrayList<Product> products;
     private double totalCost;
+    private boolean isWrittenToFile;
 
     public Invoice(Customer customer) {
         this.customer = customer;
         this.products = new ArrayList<>(); // Initialize the products list
         this.totalCost = 0; // Initialize total cost
+        this.isWrittenToFile = false;
     }
     public Invoice(ArrayList<String> order) {
         this.products = new ArrayList<>(); // Instantiate products ArrayList
@@ -94,5 +96,13 @@ public class Invoice {
     }
     public String getCustomerName() {
         return customer.getName();
+    }
+
+    public void setWrittenToFile(boolean written) {
+        this.isWrittenToFile = written;
+    }
+
+    public boolean isWrittenToFile() {
+        return this.isWrittenToFile;
     }
 }

@@ -42,13 +42,20 @@ public class invoiceManagers {
     }
 
     public void writeInvoicesToFile() {
-        System.out.println("Number of invoices: " + invoices.size());  // Log the number of invoices
         StringBuilder invoicesString = new StringBuilder();
         for (Invoice invoice : invoices) {
-            invoicesString.append(invoice.toString()).append("\n");
+            if (!invoice.isWrittenToFile()) {
+                invoicesString.append(invoice.toString()).append("\n");
+                invoice.setWrittenToFile(true);
+            }
         }
-        FileHandling.WriteToFile("Invoices.txt", invoicesString.toString(), true);  // Change false to true
-        System.out.println("Invoices.txt written to file: invoices");
+
+        if (invoicesString.length() > 0) {
+            FileHandling.WriteToFile("Invoices.txt", invoicesString.toString(), true);
+            System.out.println("New invoices written to file: Invoices.txt");
+        } else {
+            System.out.println("No new invoices to write.");
+        }
     }
 
     public List<Invoice> getInvoicesByCustomer(String customerName) {
