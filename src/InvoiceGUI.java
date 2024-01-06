@@ -1,87 +1,140 @@
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class InvoiceGUI extends JFrame {
-    public static String[][] getAllCustomers;
     private JTextField searchField;
     private JList<String> customerList;
     private DefaultListModel<String> listModel;
-    private JScrollPane scrollPane;
-    private invoiceManagers invoiceManager;
     private JTextArea invoiceTextArea;
+    private JPanel mainPanel, invoicePanel;
+    private invoiceManagers invoiceManager;
+    private List<String> allCustomers; // Stores all customer names
 
     public InvoiceGUI() {
         invoiceManager = new invoiceManagers();
         setTitle("Invoice GUI");
-        setSize(400, 300);
+        setSize(500, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
-        invoiceTextArea = new JTextArea();
-        add(new JScrollPane(invoiceTextArea), BorderLayout.SOUTH);
 
-        // Create the search field
-        searchField = new JTextField(20);
-        add(searchField, BorderLayout.NORTH);
+        // Load all customers
+        allCustomers = getAllCustomers();
 
-        // Create the list model and the list
-        listModel = new DefaultListModel<>();
-        customerList = new JList<>(listModel);
-        scrollPane = new JScrollPane(customerList);
-        add(scrollPane, BorderLayout.CENTER);
+        // Main panel for customer list
+        mainPanel = new JPanel(new BorderLayout());
 
-        // Initially populate the list with all customers
-        List<String> allCustomers = getAllCustomers();  // Assume this method retrieves all customer names
-        for (String customer : allCustomers) {
-            listModel.addElement(customer);
-        }
+        // Label for customer list
+        JLabel customersLabel = new JLabel("Customers");
+        mainPanel.add(customersLabel, BorderLayout.NORTH);
 
-        // Add a document listener to the search field to filter the list as the user types
+        // Search field setup
+        searchField = new JTextField("Search customer names", 20);
+        searchField.addFocusListener(new FocusAdapter() {
+            public void focusGained(FocusEvent e) {
+                if (searchField.getText().equals("Search customer names")) {
+                    searchField.setText("");
+                }
+            }
+            public void focusLost(FocusEvent e) {
+                if (searchField.getText().isEmpty()) {
+                    searchField.setText("Search customer names");
+                }
+            }
+        });
         searchField.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                filterList();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                filterList();
-            }
-
-            @Override
             public void changedUpdate(DocumentEvent e) {
                 filterList();
             }
+            public void removeUpdate(DocumentEvent e) {
+                filterList();
+            }
+            public void insertUpdate(DocumentEvent e) {
+                filterList();
+            }
+        });
+        mainPanel.add(searchField, BorderLayout.SOUTH);
 
-            private void filterList() {
-                String searchText = searchField.getText().toLowerCase();
-                listModel.clear();
-                for (String customer : allCustomers) {
-                    if (customer.toLowerCase().contains(searchText)) {
-                        listModel.addElement(customer);
-                    }
+        // Customer list setup
+        listModel = new DefaultListModel<>();
+        customerList = new JList<>(listModel);
+        populateCustomerList();
+        JScrollPane listScrollPane = new JScrollPane(customerList);
+        mainPanel.add(listScrollPane, BorderLayout.CENTER);
+
+        // Invoice panel setup
+        invoicePanel = new JPanel(new BorderLayout());
+        invoiceTextArea = new JTextArea();
+        invoicePanel.add(new JScrollPane(invoiceTextArea), BorderLayout.CENTER);
+
+        JButton returnButton = new JButton("Return");
+        returnButton.addActionListener(e -> switchToMainPanel());
+        invoicePanel.add(returnButton, BorderLayout.SOUTH);
+
+        // Adding main panel to frame
+        add(mainPanel, BorderLayout.CENTER);
+
+        // Selection listener for customer list
+        customerList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                String selectedCustomer = customerList.getSelectedValue();
+                if (selectedCustomer != null) {
+                    displayInvoices(selectedCustomer);
+                    switchToInvoicePanel();
                 }
             }
         });
 
-        // Add a ListSelectionListener to the customerList to trigger displayInvoices when a customer is selected
-        customerList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {  // Only handle the event once, not twice
-                    String selectedCustomer = customerList.getSelectedValue();
-                    if (selectedCustomer != null) {  // Check if a customer is actually selected
-                        displayInvoices(selectedCustomer);
-                    }
-                }
-            }
-        });
+        setVisible(true);
     }
 
-     private List<String> getAllCustomers() {
+    private void populateCustomerList() {
+        listModel.clear();
+        for (String customer : allCustomers) {
+            listModel.addElement(customer);
+        }
+    }
+
+    private void filterList() {
+        String search = searchField.getText().toLowerCase();
+        listModel.clear();
+        for (String customer : allCustomers) {
+            if (customer.toLowerCase().contains(search)) {
+                listModel.addElement(customer);
+            }
+        }
+    }
+
+    private void switchToInvoicePanel() {
+        remove(mainPanel);
+        add(invoicePanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+
+    private void switchToMainPanel() {
+        remove(invoicePanel);
+        add(mainPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
+
+    private void displayInvoices(String customerName) {
+        List<Invoice> invoices = invoiceManager.getInvoicesByCustomer(customerName);
+        StringBuilder invoiceText = new StringBuilder();
+        int invoiceCount = 1;
+        for (Invoice invoice : invoices) {
+            invoiceText.append("Invoice ").append(invoiceCount++).append(":\n")
+                    .append(invoice.toString()).append("\n\n");
+        }
+        invoiceTextArea.setText(invoiceText.toString());
+    }
+
+    private List<String> getAllCustomers() {
         ArrayList<String> fileData = FileHandling.WholeFileRead("Customers.txt");
         List<String> customerNames = new ArrayList<>();
         for (String line : fileData) {
@@ -92,19 +145,6 @@ public class InvoiceGUI extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new InvoiceGUI().setVisible(true);
-        });
-    }
-
-    private void displayInvoices(String customerName) {
-        List<Invoice> invoices = invoiceManager.getInvoicesByCustomer(customerName);
-        System.out.println("displayInvoices called with customerName: " + customerName);
-        System.out.println("Number of invoices found: " + invoices.size());
-        StringBuilder invoiceText = new StringBuilder();
-        for (Invoice invoice : invoices) {
-            invoiceText.append(invoice.toString()).append("\n");
-        }
-        invoiceTextArea.setText(invoiceText.toString());
+        SwingUtilities.invokeLater(() -> new InvoiceGUI().setVisible(true));
     }
 }

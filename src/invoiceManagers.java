@@ -15,6 +15,7 @@ public class invoiceManagers {
 
     public invoiceManagers(String fileName){
         this.invoices = new ArrayList<Invoice>();
+        //loadInvoicesFromFile("Invoices.txt");
         ArrayList<String> invoiceStrings = FileHandling.WholeFileRead(fileName);
         StringBuilder output = new StringBuilder();
         ArrayList<String> data = new ArrayList<>();
@@ -59,13 +60,25 @@ public class invoiceManagers {
     }
 
     public List<Invoice> getInvoicesByCustomer(String customerName) {
+        ArrayList<String> invoiceStrings = FileHandling.WholeFileRead("Invoices.txt");
+        ArrayList<String> data = new ArrayList<>();
         List<Invoice> customerInvoices = new ArrayList<>();
-        for (Invoice invoice : invoices) {
-            if (invoice.getCustomerName().equals(customerName)) {
-                customerInvoices.add(invoice);
+
+        for (String line : invoiceStrings) {
+            if (!line.trim().isEmpty()) {
+                data.add(line); // Add line to current invoice data
+            }
+
+            // Check if the line indicates the end of an invoice or it's the last line
+            if (line.trim().isEmpty() || invoiceStrings.indexOf(line) == invoiceStrings.size() - 1) {
+                // Check if the data belongs to the specified customer
+                if (!data.isEmpty() && data.get(0).contains(customerName)) {
+                    Invoice invoice = new Invoice(data);
+                    customerInvoices.add(invoice);
+                }
+                data.clear(); // Clear for the next invoice
             }
         }
         return customerInvoices;
     }
-
 }

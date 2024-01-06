@@ -56,6 +56,9 @@ public class Invoice {
     }
 
     public static Invoice invoiceGenerator(ArrayList<String> order) {
+        if (order.isEmpty()) {
+            return null;
+        }
         String customerName = order.get(0);
         String customerNumber = order.get(1);
         Customer customer = new Customer(customerName, customerNumber);
