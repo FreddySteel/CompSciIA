@@ -8,7 +8,7 @@ import java.util.List;
 
 public class InvoiceGUI extends JFrame {
     private JTextField searchField;
-    private JList<String> customerList;
+    JList<String> customerList;
     private DefaultListModel<String> listModel;
     private JTextArea invoiceTextArea;
     private JPanel mainPanel, invoicePanel;
@@ -92,14 +92,19 @@ public class InvoiceGUI extends JFrame {
 
         setVisible(true);
     }
-
+    public void addToInvoicePanel(Component component, Object constraints) {
+        invoicePanel.add(component, constraints);
+    }
     private void populateCustomerList() {
         listModel.clear();
         for (String customer : allCustomers) {
             listModel.addElement(customer);
         }
     }
-
+    public void deleteInvoicesForCustomer(String customerName) {
+        invoiceManager.deleteInvoicesForCustomer(customerName);
+        // You may need to implement this method in invoiceManagers
+    }
     private void filterList() {
         String search = searchField.getText().toLowerCase();
         listModel.clear();
@@ -110,7 +115,7 @@ public class InvoiceGUI extends JFrame {
         }
     }
 
-    private void switchToInvoicePanel() {
+    void switchToInvoicePanel() {
         remove(mainPanel);
         add(invoicePanel, BorderLayout.CENTER);
         revalidate();
@@ -124,7 +129,7 @@ public class InvoiceGUI extends JFrame {
         repaint();
     }
 
-    private void displayInvoices(String customerName) {
+    void displayInvoices(String customerName) {
         List<Invoice> invoices = invoiceManager.getInvoicesByCustomer(customerName);
         StringBuilder invoiceText = new StringBuilder();
         int invoiceCount = 1;

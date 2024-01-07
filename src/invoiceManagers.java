@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class invoiceManagers {
 
@@ -95,5 +97,41 @@ public class invoiceManagers {
                 }
             }
         }
+    }
+
+    public void deleteInvoicesByCustomer(String customerName) {
+        if (customerName == null || customerName.isEmpty()) {
+            return; // Invalid input handling
+        }
+        Iterator<Invoice> iterator = invoices.iterator();
+        while (iterator.hasNext()) {
+            Invoice invoice = iterator.next();
+            if (invoice.getCustomerName().equals(customerName)) {
+                iterator.remove(); // Remove the invoice from the list
+            }
+        }
+    }
+    void updateInvoiceFiles(String fileName) {
+        List<String> invoiceStrings = invoices.stream()
+                .map(Invoice::toString) // Assuming Invoice has a toString method formatted for file writing
+                .collect(Collectors.toList());
+        FileHandling.overwriteFile("Invoices.txt", new ArrayList<>(invoiceStrings));
+    }
+    public void deleteInvoicesForCustomer(String customerName) {
+        if (customerName == null || customerName.isEmpty()) {
+            return; // Handle invalid input
+        }
+
+        invoices.removeIf(invoice -> invoice.getCustomerName().equals(customerName));
+
+        // Update the file with the modified list of invoices
+        updateInvoiceFile();
+    }
+    private void updateInvoiceFile() {
+        // Assuming you have a method to convert each Invoice object to a string
+        List<String> invoiceStrings = invoices.stream()
+                .map(Invoice::toString)
+                .collect(Collectors.toList());
+        FileHandling.overwriteFile("Invoices.txt", new ArrayList<>(invoiceStrings));
     }
 }
