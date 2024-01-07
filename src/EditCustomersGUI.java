@@ -85,6 +85,7 @@ public class EditCustomersGUI extends JFrame {
         if (e.getSource() == addButton) {
             FileHandling.WriteToFile("Customers.txt", newCustomer, true);
             customerListModel.addElement(newCustomer);
+            FileHandling.removeEmptyLines("Customers.txt"); // Clean up the file
         } else if (e.getSource() == updateButton && selectedCustomer != null) {
             ArrayList<String> customerData = FileHandling.WholeFileRead("Customers.txt");
             for (int i = 0; i < customerData.size(); i++) {
@@ -93,18 +94,16 @@ public class EditCustomersGUI extends JFrame {
                     break;
                 }
             }
-            for (int i = 0; i < customerData.size(); i++) {
-                FileHandling.WriteToFile("Customers.txt", customerData.get(i), i != 0);
-            }
+            FileHandling.overwriteFile("Customers.txt", customerData);
             customerListModel.removeElement(selectedCustomer);
             customerListModel.addElement(newCustomer);
+            FileHandling.removeEmptyLines("Customers.txt"); // Clean up the file
         } else if (e.getSource() == removeButton && selectedCustomer != null) {
             ArrayList<String> customerData = FileHandling.WholeFileRead("Customers.txt");
             customerData.remove(selectedCustomer);
-            for (int i = 0; i < customerData.size(); i++) {
-                FileHandling.WriteToFile("Customers.txt", customerData.get(i), i != 0);
-            }
+            FileHandling.overwriteFile("Customers.txt", customerData);
             customerListModel.removeElement(selectedCustomer);
+            FileHandling.removeEmptyLines("Customers.txt"); // Clean up the file
         }
     }
 

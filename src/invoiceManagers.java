@@ -32,7 +32,9 @@ public class invoiceManagers {
                     Customer customer = new Customer(customerName, customerPhone);
 
                     // Create invoice with customer and products
+
                     Invoice invoice = new Invoice(customer, currentInvoiceData.subList(1, currentInvoiceData.size() - 1));
+                    invoice.setWrittenToFile(true);
                     this.invoices.add(invoice);
                     currentInvoiceData.clear();
                 }

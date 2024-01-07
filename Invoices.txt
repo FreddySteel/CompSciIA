@@ -1,31 +1,64 @@
 
 Invoice for Customer: Customer2 Phone: 12343098
+Bacon ($35.99)
 Cheese ($11.49)
 Chicken ($15.49)
 Ham ($33.49)
 Beans ($55.49)
-Total Cost: $115.96
+Total Cost: $151.95
 
-
-Invoice for Customer: Freddy Phone: 073339393
+Invoice for Customer: Freddy Phone: 123456789
+Bacon ($35.99)
 Cheese ($11.49)
 Chicken ($15.49)
 Ham ($33.49)
 Beans ($55.49)
-Total Cost: $115.96
+Total Cost: $151.95
 
-
-Invoice for Customer: Customer1 Phone: 07122344
+Invoice for Customer: MrObama Phone: 987654321
+Bacon ($35.99)
 Cheese ($11.49)
 Chicken ($15.49)
 Ham ($33.49)
 Beans ($55.49)
-Total Cost: $115.96
+Total Cost: $151.95
 
-
-Invoice for Customer: FreddyS2 Phone: 0712340982
+Invoice for Customer: Yay Phone: 2468
+Bacon ($35.99)
 Cheese ($11.49)
 Chicken ($15.49)
 Ham ($33.49)
 Beans ($55.49)
-Total Cost: $115.96
+Total Cost: $151.95
+
+Invoice for Customer: Customer2 Phone: 12343098
+Bacon ($35.99)
+Cheese ($11.49)
+Chicken ($15.49)
+Ham ($33.49)
+Beans ($55.49)
+Total Cost: $151.95
+
+Invoice for Customer: Freddy Phone: 123456789
+Bacon ($35.99)
+Cheese ($11.49)
+Chicken ($15.49)
+Ham ($33.49)
+Beans ($55.49)
+Total Cost: $151.95
+
+Invoice for Customer: MrObama Phone: 987654321
+Bacon ($35.99)
+Cheese ($11.49)
+Chicken ($15.49)
+Ham ($33.49)
+Beans ($55.49)
+Total Cost: $151.95
+
+Invoice for Customer: Yay Phone: 2468
+Bacon ($35.99)
+Cheese ($11.49)
+Chicken ($15.49)
+Ham ($33.49)
+Beans ($55.49)
+Total Cost: $151.95

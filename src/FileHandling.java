@@ -97,4 +97,16 @@ public class FileHandling {
             }
         }
     }
+    public static void removeEmptyLines(String filename) {
+        ArrayList<String> lines = WholeFileRead(filename);
+        if (lines == null) return;
+
+        ArrayList<String> cleanedLines = new ArrayList<>();
+        for (String line : lines) {
+            if (!line.trim().isEmpty()) {
+                cleanedLines.add(line);
+            }
+        }
+        overwriteFile(filename, cleanedLines);
+    }
 }

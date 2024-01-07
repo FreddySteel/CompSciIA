@@ -88,12 +88,18 @@ public class Invoice {
         if (order.isEmpty()) {
             return null;
         }
-        String customerName = order.get(0);
-        String customerNumber = order.get(1);
-        Customer customer = new Customer(customerName, customerNumber);
+        String firstLine = order.get(0); // "Customer: [Name] Phone: [Phone]"
+        String[] parts = firstLine.split(" Phone: ");
+        String customerName = parts[0].replace("Customer:", "").trim();
+        String customerPhone = parts.length > 1 ? parts[1].trim() : "";
+
+        // Create a Customer object
+        Customer customer = new Customer(customerName, customerPhone);
+
+        // Create an Invoice object with the customer
         Invoice invoice = new Invoice(customer);
         // Add the products to the invoice
-        for (int j = 2; j < order.size(); j++) {
+        for (int j = 1; j < order.size(); j++) {
             String[] productOrder = order.get(j).split(" ");
             String productName = productOrder[0];
             int productQuantity = Integer.parseInt(productOrder[1]);
