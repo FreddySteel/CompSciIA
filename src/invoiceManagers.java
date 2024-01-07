@@ -60,25 +60,31 @@ public class invoiceManagers {
     }
 
     public List<Invoice> getInvoicesByCustomer(String customerName) {
-        ArrayList<String> invoiceStrings = FileHandling.WholeFileRead("Invoices.txt");
-        ArrayList<String> data = new ArrayList<>();
         List<Invoice> customerInvoices = new ArrayList<>();
-
-        for (String line : invoiceStrings) {
-            if (!line.trim().isEmpty()) {
-                data.add(line); // Add line to current invoice data
-            }
-
-            // Check if the line indicates the end of an invoice or it's the last line
-            if (line.trim().isEmpty() || invoiceStrings.indexOf(line) == invoiceStrings.size() - 1) {
-                // Check if the data belongs to the specified customer
-                if (!data.isEmpty() && data.get(0).contains(customerName)) {
-                    Invoice invoice = new Invoice(data);
-                    customerInvoices.add(invoice);
-                }
-                data.clear(); // Clear for the next invoice
+        for (Invoice invoice : this.invoices) {
+            if (invoice.getCustomerName().equals(customerName)) {
+                customerInvoices.add(invoice);
             }
         }
         return customerInvoices;
+    }
+
+    // Make sure to call this method after initializing the object to load invoices
+    public void loadInvoicesFromFile(String fileName) {
+        ArrayList<String> invoiceStrings = FileHandling.WholeFileRead(fileName);
+        ArrayList<String> currentInvoiceData = new ArrayList<>();
+
+        for (String line : invoiceStrings) {
+            System.out.println("Reading line: " + line); // Debug print
+            if (!line.trim().isEmpty()) {
+                currentInvoiceData.add(line);
+                if (line.startsWith("Total Cost:")) {
+                    Invoice invoice = new Invoice(currentInvoiceData);
+                    invoices.add(invoice);
+                    System.out.println("Loaded invoice: " + invoice); // Debug print
+                    currentInvoiceData = new ArrayList<>();
+                }
+            }
+        }
     }
 }

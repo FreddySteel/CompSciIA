@@ -1,27 +1,32 @@
 
 Invoice for Customer: Customer2 Phone: 12343098
-Bacon ($11.49)
-Cheese ($15.49)
-Chicken ($33.49)
-Ham ($55.49)
-Beans ($33.49)
-Total Cost: $149.45
+Cheese ($11.49)
+Chicken ($15.49)
+Ham ($33.49)
+Beans ($55.49)
+Total Cost: $115.96
 
 
 Invoice for Customer: Freddy Phone: 073339393
-Bacon ($11.49)
-Cheese ($15.49)
-Chicken ($33.49)
-Ham ($55.49)
-Beans ($33.49)
-Total Cost: $149.45
+Cheese ($11.49)
+Chicken ($15.49)
+Ham ($33.49)
+Beans ($55.49)
+Total Cost: $115.96
 
 
 Invoice for Customer: Customer1 Phone: 07122344
-Bacon ($11.49)
-Cheese ($15.49)
-Chicken ($33.49)
-Ham ($55.49)
-Beans ($33.49)
-Total Cost: $149.45
+Cheese ($11.49)
+Chicken ($15.49)
+Ham ($33.49)
+Beans ($55.49)
+Total Cost: $115.96
+
+
+Invoice for Customer: FreddyS2 Phone: 0712340982
+Cheese ($11.49)
+Chicken ($15.49)
+Ham ($33.49)
+Beans ($55.49)
+Total Cost: $115.96
 

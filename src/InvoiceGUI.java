@@ -17,6 +17,7 @@ public class InvoiceGUI extends JFrame {
 
     public InvoiceGUI() {
         invoiceManager = new invoiceManagers();
+        invoiceManager.loadInvoicesFromFile("Invoices.txt");
         setTitle("Invoice GUI");
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

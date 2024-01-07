@@ -1,6 +1,5 @@
-100,Sausage,14.49
-100,Bacon,11.49
-100,Cheese,15.49
-100,Chicken,33.49
-100,Ham,55.49
-100,Beans,33.49
+100,Bacon,35.99
+100,Cheese,11.49
+100,Chicken,15.49
+100,Ham,33.49
+100,Beans,55.49

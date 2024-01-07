@@ -32,7 +32,7 @@ public class InvoiceViewer {
     }
 
     private void loadInvoices() {
-        ArrayList<String> lines = FileHandling.WholeFileRead("Invoices.txt.txt");
+        ArrayList<String> lines = FileHandling.WholeFileRead("Invoices.txt");
         String text = String.join("\n", lines);
         textArea.setText(text);
     }
