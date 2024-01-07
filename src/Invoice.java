@@ -128,22 +128,7 @@ public class Invoice {
     }
     public String getCustomerName() {
         String fullInfo = customer.getName();
-        // Assuming the format is "Customer: [Name] Phone: [Number]"
-        String[] parts = fullInfo.split(" "); // Split by space
-        // Find the index of the word "Customer:"
-        int customerIndex = -1;
-        for (int i = 0; i < parts.length; i++) {
-            if (parts[i].equals("Customer:")) {
-                customerIndex = i;
-                break;
-            }
-        }
-        // Return the name part if found
-        if (customerIndex != -1 && customerIndex + 1 < parts.length) {
-            return parts[customerIndex + 1];
-        } else {
-            return "Unknown"; // or any default name
-        }
+        return fullInfo;
     }
     public void setWrittenToFile(boolean written) {
         this.isWrittenToFile = written;
