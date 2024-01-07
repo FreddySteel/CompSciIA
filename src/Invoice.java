@@ -111,12 +111,12 @@ public class Invoice {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Customer Name: ").append(this.customer.getName()).append("\n");
-        sb.append("Customer Phone: ").append(this.customer.getPhoneNumber()).append("\n");
+        sb.append("Invoice for Customer: ").append(getCustomerName())
+                .append(" Phone: ").append(this.customer.getPhoneNumber()).append("\n");
         for (Product product : this.products) {
-            sb.append(product.getName()).append(" ($").append(product.getPrice()).append(")\n");
+            sb.append(product.getName()).append(" ($").append(String.format("%.2f", product.getPrice())).append(")\n");
         }
-        sb.append("Total Cost: $").append(this.totalCost).append("\n");
+        sb.append("Total Cost: $").append(String.format("%.2f", this.totalCost));
         return sb.toString();
     }
     public void updateProduct(Product oldProduct, Product newProduct) {

@@ -32,10 +32,8 @@ public class invoiceManagers {
                     Customer customer = new Customer(customerName, customerPhone);
 
                     // Create invoice with customer and products
-                    System.out.println(currentInvoiceData.subList(1, currentInvoiceData.size() - 1));
                     Invoice invoice = new Invoice(customer, currentInvoiceData.subList(1, currentInvoiceData.size() - 1));
                     this.invoices.add(invoice);
-                    System.out.println(invoice);
                     currentInvoiceData.clear();
                 }
             }
@@ -45,7 +43,7 @@ public class invoiceManagers {
     public List<Invoice> getAllInvoices() {
         int count = 1;
         for (Invoice invoice : invoices) {
-            System.out.println("Invoice " + count + ":\n" + invoice);
+ //           System.out.println("Invoice " + count + ":\n" + invoice);
             count++;
         }
         return invoices;
@@ -84,13 +82,13 @@ public class invoiceManagers {
         ArrayList<String> currentInvoiceData = new ArrayList<>();
 
         for (String line : invoiceStrings) {
-            System.out.println("Reading line: " + line); // Debug print
+//            System.out.println("Reading line: " + line); // Debug print
             if (!line.trim().isEmpty()) {
                 currentInvoiceData.add(line);
                 if (line.startsWith("Total Cost:")) {
                     Invoice invoice = new Invoice(currentInvoiceData);
                     invoices.add(invoice);
-                    System.out.println("Loaded invoice: " + invoice); // Debug print
+//                    System.out.println("Loaded invoice: " + invoice); // Debug print
                     currentInvoiceData = new ArrayList<>();
                 }
             }

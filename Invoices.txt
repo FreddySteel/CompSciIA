@@ -29,4 +29,3 @@ Chicken ($15.49)
 Ham ($33.49)
 Beans ($55.49)
 Total Cost: $115.96
-
