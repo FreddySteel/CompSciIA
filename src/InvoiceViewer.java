@@ -33,8 +33,26 @@ public class InvoiceViewer {
 
     private void loadInvoices() {
         ArrayList<String> lines = FileHandling.WholeFileRead("Invoices.txt");
-        String text = String.join("\n", lines);
-        textArea.setText(text);
+        ArrayList<String> currentInvoice = new ArrayList<>();
+        StringBuilder formattedInvoices = new StringBuilder();
+
+        for (String line : lines) {
+            if (line.startsWith("Invoice for Customer:")) {
+                if (!currentInvoice.isEmpty()) {
+                    // Add the current invoice to formattedInvoices
+                    formattedInvoices.append(String.join("\n", currentInvoice)).append("\n\n");
+                    currentInvoice.clear();
+                }
+            }
+            currentInvoice.add(line);
+        }
+
+        // Add the last invoice
+        if (!currentInvoice.isEmpty()) {
+            formattedInvoices.append(String.join("\n", currentInvoice));
+        }
+
+        textArea.setText(formattedInvoices.toString());
     }
 
     public static void main(String[] args) {

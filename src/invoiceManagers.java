@@ -13,25 +13,34 @@ public class invoiceManagers {
         this.invoices = new ArrayList<Invoice>();
     }
 
-    public invoiceManagers(String fileName){
+    public invoiceManagers(String fileName) {
         this.invoices = new ArrayList<Invoice>();
-        //loadInvoicesFromFile("Invoices.txt");
         ArrayList<String> invoiceStrings = FileHandling.WholeFileRead(fileName);
-        StringBuilder output = new StringBuilder();
-        ArrayList<String> data = new ArrayList<>();
-        for (String invoiceString : invoiceStrings) {
-            data.add(invoiceString);
-            if (invoiceString.contains("Total Cost")){
-                Invoice i = new Invoice(data);
-                this.invoices.add(i); // Add invoice to list
-                data = new ArrayList<>();
-                System.out.println(i.toString());
+        ArrayList<String> currentInvoiceData = new ArrayList<>();
+
+        for (String line : invoiceStrings) {
+            if (!line.trim().isEmpty()) {
+                currentInvoiceData.add(line);
+                if (line.startsWith("Total Cost")) {
+                    // Extract customer name and phone number
+                    String firstLine = currentInvoiceData.get(0); // "Invoice for Customer: [Name] Phone: [Phone]"
+                    String[] parts = firstLine.split("Phone:");
+                    String customerName = parts[0].replace("Invoice for Customer:", "").trim();
+                    String customerPhone = parts.length > 1 ? parts[1].trim() : "";
+
+                    // Create customer
+                    Customer customer = new Customer(customerName, customerPhone);
+
+                    // Create invoice with customer and products
+                    System.out.println(currentInvoiceData.subList(1, currentInvoiceData.size() - 1));
+                    Invoice invoice = new Invoice(customer, currentInvoiceData.subList(1, currentInvoiceData.size() - 1));
+                    this.invoices.add(invoice);
+                    System.out.println(invoice);
+                    currentInvoiceData.clear();
+                }
             }
         }
-
-        System.out.println(" --- ");
     }
-
 
     public List<Invoice> getAllInvoices() {
         int count = 1;
@@ -62,7 +71,7 @@ public class invoiceManagers {
     public List<Invoice> getInvoicesByCustomer(String customerName) {
         List<Invoice> customerInvoices = new ArrayList<>();
         for (Invoice invoice : this.invoices) {
-            if (invoice.getCustomerName().equals(customerName)) {
+            if (invoice.getCustomerName().equalsIgnoreCase(customerName)) {
                 customerInvoices.add(invoice);
             }
         }
