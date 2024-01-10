@@ -109,4 +109,15 @@ public class FileHandling {
         }
         overwriteFile(filename, cleanedLines);
     }
+
+    public static void createIfNotExists(String filename){
+        File file = new File(filename);
+        if (!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
 }

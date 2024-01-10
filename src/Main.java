@@ -2,6 +2,9 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
+        FileHandling.createIfNotExists("Invoices.txt");
+        FileHandling.createIfNotExists("Customers.txt");
+        FileHandling.createIfNotExists("Inventory.txt");
         invoiceManagers manager = new invoiceManagers("Invoices.txt");
         System.out.println("SEQUENCE: Program started");
         JFrame frame = new JFrame("Demo frame");

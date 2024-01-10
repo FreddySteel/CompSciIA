@@ -83,6 +83,9 @@ public class EditCustomersGUI extends JFrame {
         String selectedCustomer = customersList.getSelectedValue();
 
         if (e.getSource() == addButton) {
+            if (name.isEmpty() || phone.isEmpty()){
+                JOptionPane.showMessageDialog(this, "Can't have empty values", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
             FileHandling.WriteToFile("Customers.txt", newCustomer, true);
             customerListModel.addElement(newCustomer);
             FileHandling.removeEmptyLines("Customers.txt"); // Clean up the file
