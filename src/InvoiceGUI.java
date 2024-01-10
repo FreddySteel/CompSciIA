@@ -144,8 +144,12 @@ public class InvoiceGUI extends JFrame {
         ArrayList<String> fileData = FileHandling.WholeFileRead("Customers.txt");
         List<String> customerNames = new ArrayList<>();
         for (String line : fileData) {
-            String[] splitLine = line.split(",");
-            customerNames.add(splitLine[0]);
+            if (!line.trim().isEmpty()) {
+                String[] splitLine = line.split(",");
+                if (splitLine.length >= 1) { // Assuming the first part is always the customer name
+                    customerNames.add(splitLine[0]);
+                }
+            }
         }
         return customerNames;
     }

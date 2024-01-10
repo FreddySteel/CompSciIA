@@ -68,12 +68,12 @@ public class OrderGUI extends JFrame {
 
         String customer = customersQueue.poll();
         String[] customerInfo = customer.split(",");
-        if (customerInfo.length >= 2) {
-            updateCustomerDisplay(customerInfo[0], customerInfo[1]);
-        } else {
-            System.err.println("Invalid customer format: " + customer);
+        if (customerInfo.length != 2) {
+            JOptionPane.showMessageDialog(this, "Invalid customer format: " + customer, "Error!", JOptionPane.ERROR_MESSAGE);
             showNextCustomer(); // Skip to next customer
+            return;
         }
+        updateCustomerDisplay(customerInfo[0], customerInfo[1]);
     }
 
     private void updateCustomerDisplay(String name, String phone) {
@@ -84,25 +84,35 @@ public class OrderGUI extends JFrame {
     }
 
     private void submitCurrentOrder() {
-        ArrayList<String> order = new ArrayList<>();
-        order.add(customerInfo.getText());
+        try {
+            ArrayList<String> order = new ArrayList<>();
+            order.add(customerInfo.getText());
 
-        for (int i = 0; i < products.length; i++) {
-            String product = products[i];
-            String quantity = quantities[i].getText().trim();
-            order.add(product + " " + quantity);
+            for (int i = 0; i < products.length; i++) {
+                String product = products[i];
+                String quantity = quantities[i].getText().trim();
+                order.add(product + " " + quantity);
+            }
+
+            Invoice invoice = Invoice.invoiceGenerator(order);
+            manager.addInvoice(invoice);
+            manager.writeInvoicesToFile();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error processing order: " + e.getMessage(), "Error!", JOptionPane.ERROR_MESSAGE);
         }
-
-        Invoice invoice = Invoice.invoiceGenerator(order);
-        manager.addInvoice(invoice);
-        manager.writeInvoicesToFile();
     }
 
     private boolean isValidOrder() {
         for (JTextField quantity : quantities) {
             String text = quantity.getText().trim();
-            if (!text.matches("\\d+")) {
-                JOptionPane.showMessageDialog(this, "Please enter a valid quantity for all products.");
+            try {
+                int qty = Integer.parseInt(text);
+                if (qty < 0) {
+                    JOptionPane.showMessageDialog(this, "Quantities cannot be negative.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Please enter a valid integer quantity for all products.", "Input Error", JOptionPane.ERROR_MESSAGE);
                 return false;
             }
         }

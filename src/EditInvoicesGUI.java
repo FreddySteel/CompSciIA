@@ -35,17 +35,29 @@ public class EditInvoicesGUI extends InvoiceGUI {
     }
 
     private void editInvoice(ActionEvent e) {
-        // Edit invoice logic
+        if (currentlySelectedCustomer == null) {
+            JOptionPane.showMessageDialog(this, "No customer selected for editing.", "Edit Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // Implementation for editing an invoice goes here
+        // Example: Open a dialog to edit invoice details
     }
 
     private void deleteInvoice(ActionEvent e) {
-        if (currentlySelectedCustomer != null) {
-            int confirm = JOptionPane.showConfirmDialog(this,
-                    "Are you sure you want to delete invoices for " + currentlySelectedCustomer + "?",
-                    "Delete Confirmation", JOptionPane.YES_NO_OPTION);
-            if (confirm == JOptionPane.YES_OPTION) {
+        if (currentlySelectedCustomer == null) {
+            JOptionPane.showMessageDialog(this, "No customer selected for deletion.", "Delete Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "Are you sure you want to delete invoices for " + currentlySelectedCustomer + "?",
+                "Delete Confirmation", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
                 // Use public method from InvoiceGUI
                 deleteInvoicesForCustomer(currentlySelectedCustomer);
+                JOptionPane.showMessageDialog(this, "Invoices deleted successfully.", "Deletion Successful", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error deleting invoices: " + ex.getMessage(), "Deletion Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

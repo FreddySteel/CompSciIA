@@ -72,6 +72,6 @@ public class SettingsGUI extends JPanel implements ActionListener {
                 }
             }
             new EditInvoicesGUI().setVisible(true);
-        }// Make this a method !!!
+        }
     }
 }

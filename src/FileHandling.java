@@ -4,41 +4,28 @@ import java.util.Scanner;
 
 public class FileHandling {
     public static ArrayList<String> WholeFileRead(String Filename) {
-        try {
-            FileReader fr = new FileReader(Filename);
-            BufferedReader br = new BufferedReader(fr);
-            ArrayList<String> data = new ArrayList<>();
-            String line = br.readLine();
-            while (line != null) {
+        ArrayList<String> data = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(Filename))) {
+            String line;
+            while ((line = br.readLine()) != null) {
                 data.add(line);
-                line = br.readLine();
             }
-            return data;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return data;
     }
 
-    //returns number of lines in array.
     public static int numOfLines(String filename) {
-        //Open the file.
-        //Read line by line, and increases count + 1 each line.
-        //Close the file.
-        //Read the count.
-        try {
-            Scanner line = new Scanner(new File(filename));
-            int numLines = 0;
-            while (line.hasNextLine()) {
-                line.nextLine();
+        int numLines = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            while (reader.readLine() != null) {
                 numLines++;
             }
-            line.close();
-            return numLines;
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        return 0;
+        return numLines;
     }
 
     // converts the file to an array,
@@ -118,6 +105,18 @@ public class FileHandling {
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
+        }
+    }
+
+    public class FileReadException extends Exception {
+        public FileReadException(String message, Throwable cause) {
+            super(message, cause);
+        }
+    }
+
+    public class FileWriteException extends Exception {
+        public FileWriteException(String message, Throwable cause) {
+            super(message, cause);
         }
     }
 }
