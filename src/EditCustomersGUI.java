@@ -79,6 +79,13 @@ public class EditCustomersGUI extends JFrame {
     private void handleButtonActions(ActionEvent e) {
         String name = customerNameField.getText().trim();
         String phone = customerPhoneField.getText().trim();
+
+        // Check if the phone number is numeric
+        if (!phone.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Invalid input: Phone number must be numeric", "Error!", JOptionPane.ERROR_MESSAGE);
+            return; // Stop execution if phone is not numeric
+        }
+
         String newCustomer = name + "," + phone;
         String selectedCustomer = customersList.getSelectedValue();
 
@@ -90,11 +97,13 @@ public class EditCustomersGUI extends JFrame {
             FileHandling.WriteToFile("Customers.txt", newCustomer, true);
             customerListModel.addElement(newCustomer);
             FileHandling.removeEmptyLines("Customers.txt"); // Clean up the file
+            resizeFrame();
         } else if (e.getSource() == updateButton && selectedCustomer != null) {
             ArrayList<String> customerData = FileHandling.WholeFileRead("Customers.txt");
             for (int i = 0; i < customerData.size(); i++) {
                 if (customerData.get(i).equals(selectedCustomer)) {
                     customerData.set(i, newCustomer);
+                    resizeFrame();
                     break;
                 }
             }
@@ -108,6 +117,7 @@ public class EditCustomersGUI extends JFrame {
             FileHandling.overwriteFile("Customers.txt", customerData);
             customerListModel.removeElement(selectedCustomer);
             FileHandling.removeEmptyLines("Customers.txt"); // Clean up the file
+            resizeFrame();
         }
     }
 
@@ -122,5 +132,10 @@ public class EditCustomersGUI extends JFrame {
         SwingUtilities.invokeLater(() -> {
             new EditCustomersGUI().setVisible(true);
         });
+    }
+    private void resizeFrame() {
+        int size = Math.min(customerListModel.getSize(), MAX_VISIBLE_ROWS);
+        customersList.setVisibleRowCount(size);
+        pack(); // This will resize the JFrame to fit the content
     }
 }

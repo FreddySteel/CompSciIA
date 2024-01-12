@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class EditInvoicesGUI extends InvoiceGUI {
-    private JButton editInvoiceButton, deleteInvoiceButton;
+    private JButton deleteInvoiceButton;
     private String currentlySelectedCustomer;
 
     public EditInvoicesGUI() {
@@ -11,12 +11,9 @@ public class EditInvoicesGUI extends InvoiceGUI {
 
         // Add buttons for editing and deleting invoices
         JPanel editPanel = new JPanel();
-        editInvoiceButton = new JButton("Edit Invoice");
-        editInvoiceButton.addActionListener(this::editInvoice);
         deleteInvoiceButton = new JButton("Delete Invoice");
         deleteInvoiceButton.addActionListener(this::deleteInvoice);
 
-        editPanel.add(editInvoiceButton);
         editPanel.add(deleteInvoiceButton);
 
         // Use public method to add components to the invoicePanel

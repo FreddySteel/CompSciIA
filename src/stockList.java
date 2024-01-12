@@ -1,9 +1,4 @@
-import java.util.ArrayList;
-
 public class stockList {
-    // display the stocklist
-
-
     public static String[] productsInStock() {
         int k = 0;
         String[] products = new String[FileHandling.numOfLines("Inventory.txt")];

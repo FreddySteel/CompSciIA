@@ -1,0 +1,48 @@
+
+Invoice for Customer: customer1 Phone: 0123456789
+Bacon ($45.99)
+Ketchup ($5.99)
+Beans ($19.50)
+product1 ($99.99)
+Product2 ($1000.00)
+Total Cost: $1171.47
+
+Invoice for Customer: Customer2 Phone: 987654321
+Bacon ($45.99)
+Ketchup ($5.99)
+Beans ($19.50)
+product1 ($99.99)
+Product2 ($1000.00)
+Total Cost: $1171.47
+
+Invoice for Customer: Customer3 Phone: 123456789
+Bacon ($45.99)
+Ketchup ($5.99)
+Beans ($19.50)
+product1 ($99.99)
+Product2 ($1000.00)
+Total Cost: $1171.47
+
+Invoice for Customer: customer1 Phone: 0123456789
+Bacon ($45.99)
+Ketchup ($5.99)
+Beans ($19.50)
+product1 ($99.99)
+Product2 ($1000.00)
+Total Cost: $1171.47
+
+Invoice for Customer: Customer2 Phone: 987654321
+Bacon ($45.99)
+Ketchup ($5.99)
+Beans ($19.50)
+product1 ($99.99)
+Product2 ($1000.00)
+Total Cost: $1171.47
+
+Invoice for Customer: Customer3 Phone: 123456789
+Bacon ($45.99)
+Ketchup ($5.99)
+Beans ($19.50)
+product1 ($99.99)
+Product2 ($1000.00)
+Total Cost: $1171.47

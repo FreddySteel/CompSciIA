@@ -13,6 +13,7 @@ public class EditInventoryGUI extends JFrame {
     private DefaultListModel<String> listModel;
 
     public EditInventoryGUI() {
+
         setTitle("Edit Inventory");
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -32,10 +33,8 @@ public class EditInventoryGUI extends JFrame {
         editButton = new JButton("Edit");
         removeButton = new JButton("Remove");
         String productName = inventoryList.getSelectedValue();
-        if (productName == null) {
-            JOptionPane.showMessageDialog(null, "Please select a product from the list.", "Selection Error", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+
+
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -58,6 +57,10 @@ public class EditInventoryGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String oldProductName = inventoryList.getSelectedValue();
+                if (oldProductName == null) {
+                    JOptionPane.showMessageDialog(null, "Please select a product from the list.", "Selection Error", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
                 if (oldProductName != null) {
                     String newProduct = JOptionPane.showInputDialog("Edit product name:", oldProductName);
                     if (newProduct != null && !newProduct.trim().isEmpty()) {
@@ -150,4 +153,5 @@ public class EditInventoryGUI extends JFrame {
             JOptionPane.showMessageDialog(null, "Error removing product: " + ex.getMessage(), "File Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 }

@@ -1,0 +1,5 @@
+100,Bacon,45.99
+200,Ketchup,5.99
+100,Beans,19.5
+100,product1,99.99
+100,Product2,1000.0

@@ -62,7 +62,7 @@ public class GUI extends JPanel implements ActionListener {
                 }
             }
             // Create and show the OrderGUI
-            OrderGUI orderGUI = new OrderGUI(initialCustomerData, products, manager, customersQueue);
+            OrderGUI orderGUI = new OrderGUI(products, manager, customersQueue);
             orderGUI.setVisible(true);
         }
         if (e.getActionCommand().equals("Settings")) {

@@ -10,7 +10,7 @@ public class OrderGUI extends JFrame {
     private invoiceManagers manager;
     private String[] products;
 
-    public OrderGUI(String[][] initialCustomerData, String[] products, invoiceManagers manager, Queue<String> customersQueue) {
+    public OrderGUI(String[] products, invoiceManagers manager, Queue<String> customersQueue) {
         this.customersQueue = customersQueue;
         this.products = products;
         this.manager = manager;
@@ -47,7 +47,7 @@ public class OrderGUI extends JFrame {
         panel.add(nextPanel);
 
         add(panel, BorderLayout.CENTER);
-        pack();
+        setSize(500, 500);
         setVisible(true);
     }
 
