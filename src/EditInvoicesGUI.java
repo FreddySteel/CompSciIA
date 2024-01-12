@@ -30,15 +30,8 @@ public class EditInvoicesGUI extends InvoiceGUI {
             }
         });
     }
-
-    private void editInvoice(ActionEvent e) {
-        if (currentlySelectedCustomer == null) {
-            JOptionPane.showMessageDialog(this, "No customer selected for editing.", "Edit Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
         // Implementation for editing an invoice goes here
         // Example: Open a dialog to edit invoice details
-    }
 
     private void deleteInvoice(ActionEvent e) {
         if (currentlySelectedCustomer == null) {

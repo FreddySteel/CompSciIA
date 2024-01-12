@@ -1,48 +1,39 @@
+Invoice for Customer: BOB Phone: 123456
+Bacon ($45.99)
+Ketchup ($5.99)
+Ketchup ($5.99)
+Beans ($19.50)
+ProductExample ($19.99)
+Total Cost: $97.46
 
-Invoice for Customer: customer1 Phone: 0123456789
+Invoice for Customer: customer1 Phone: 987654321
 Bacon ($45.99)
 Ketchup ($5.99)
 Beans ($19.50)
-product1 ($99.99)
-Product2 ($1000.00)
-Total Cost: $1171.47
+ProductExample ($121.00)
+Product2 ($10.99)
+Total Cost: $203.47
 
-Invoice for Customer: Customer2 Phone: 987654321
+Invoice for Customer: customer4 Phone: 2469
 Bacon ($45.99)
 Ketchup ($5.99)
 Beans ($19.50)
-product1 ($99.99)
-Product2 ($1000.00)
-Total Cost: $1171.47
+ProductExample ($121.00)
+Product2 ($10.99)
+Total Cost: $203.47
 
-Invoice for Customer: Customer3 Phone: 123456789
+Invoice for Customer: Customer2 Phone: 1234567
 Bacon ($45.99)
 Ketchup ($5.99)
 Beans ($19.50)
-product1 ($99.99)
-Product2 ($1000.00)
-Total Cost: $1171.47
-
-Invoice for Customer: customer1 Phone: 0123456789
-Bacon ($45.99)
-Ketchup ($5.99)
-Beans ($19.50)
-product1 ($99.99)
-Product2 ($1000.00)
-Total Cost: $1171.47
-
-Invoice for Customer: Customer2 Phone: 987654321
-Bacon ($45.99)
-Ketchup ($5.99)
-Beans ($19.50)
-product1 ($99.99)
-Product2 ($1000.00)
-Total Cost: $1171.47
+ProductExample ($121.00)
+Product2 ($10.99)
+Total Cost: $203.47
 
 Invoice for Customer: Customer3 Phone: 123456789
 Bacon ($45.99)
 Ketchup ($5.99)
 Beans ($19.50)
-product1 ($99.99)
-Product2 ($1000.00)
-Total Cost: $1171.47
+ProductExample ($121.00)
+Product2 ($10.99)
+Total Cost: $203.47

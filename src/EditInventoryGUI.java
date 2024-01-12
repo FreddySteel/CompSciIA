@@ -129,8 +129,6 @@ public class EditInventoryGUI extends JFrame {
 
             if (productFound) {
                 FileHandling.overwriteFile("inventory.txt", products);
-            } else {
-                JOptionPane.showMessageDialog(null, "Product not found: " + oldProductName, "Update Error", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (Exception ex) {
@@ -145,8 +143,6 @@ public class EditInventoryGUI extends JFrame {
 
             if (productFound) {
                 FileHandling.overwriteFile("inventory.txt", products);
-            } else {
-                JOptionPane.showMessageDialog(null, "Product not found: " + productName, "Removal Error", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (Exception ex) {

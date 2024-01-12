@@ -81,10 +81,7 @@ public class EditCustomersGUI extends JFrame {
         String phone = customerPhoneField.getText().trim();
 
         // Check if the phone number is numeric
-        if (!phone.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "Invalid input: Phone number must be numeric", "Error!", JOptionPane.ERROR_MESSAGE);
-            return; // Stop execution if phone is not numeric
-        }
+
 
         String newCustomer = name + "," + phone;
         String selectedCustomer = customersList.getSelectedValue();
@@ -94,11 +91,23 @@ public class EditCustomersGUI extends JFrame {
                 JOptionPane.showMessageDialog(this, "Can't have empty values", "Error!", JOptionPane.ERROR_MESSAGE);
                 return; // Stop the execution if name or phone is empty
             }
+            if (!phone.matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "Invalid input: Phone number must be numeric", "Error!", JOptionPane.ERROR_MESSAGE);
+                return; // Stop execution if phone is not numeric
+            }
             FileHandling.WriteToFile("Customers.txt", newCustomer, true);
             customerListModel.addElement(newCustomer);
             FileHandling.removeEmptyLines("Customers.txt"); // Clean up the file
             resizeFrame();
         } else if (e.getSource() == updateButton && selectedCustomer != null) {
+            if (name.isEmpty() || phone.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Can't have empty values", "Error!", JOptionPane.ERROR_MESSAGE);
+                return; // Stop the execution if name or phone is empty
+            }
+            if (!phone.matches("\\d+")) {
+                JOptionPane.showMessageDialog(this, "Invalid input: Phone number must be numeric", "Error!", JOptionPane.ERROR_MESSAGE);
+                return; // Stop execution if phone is not numeric
+            }
             ArrayList<String> customerData = FileHandling.WholeFileRead("Customers.txt");
             for (int i = 0; i < customerData.size(); i++) {
                 if (customerData.get(i).equals(selectedCustomer)) {
